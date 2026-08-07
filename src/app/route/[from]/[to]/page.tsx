@@ -11,12 +11,12 @@ const BASE_URL = "https://tokyotrip.kr";
 
 // 검색 볼륨 있는 경로 키워드 매핑
 const ROUTE_KEYWORDS: Record<string, string[]> = {
-  "narita-shinjuku": ["나리타공항 신주쿠", "공항 신주쿠 지하철", "나리타 익스프레스 예약", "NEX", "스카이라이너"],
-  "narita-shibuya": ["나리타공항 시부야", "공항 시부야", "나리타 시부야 가는법"],
-  "narita-tokyo": ["나리타공항 도쿄역", "도쿄역 가는법", "나리타 도쿄"],
-  "narita-ueno": ["나리타 우에노", "스카이라이너 우에노", "우에노 가는법"],
-  "haneda-shinjuku": ["하네다공항 신주쿠", "하네다 신주쿠"],
-  "haneda-shibuya": ["하네다 시부야", "하네다공항 시부야 가는법"],
+  "narita-airport-shinjuku": ["나리타공항 신주쿠", "공항 신주쿠 지하철", "나리타 익스프레스 예약", "NEX", "스카이라이너"],
+  "narita-airport-shibuya": ["나리타공항 시부야", "공항 시부야", "나리타 시부야 가는법"],
+  "narita-airport-tokyo": ["나리타공항 도쿄역", "도쿄역 가는법", "나리타 도쿄"],
+  "narita-airport-ueno": ["나리타 우에노", "스카이라이너 우에노", "우에노 가는법"],
+  "haneda-airport-shinjuku": ["하네다공항 신주쿠", "하네다 신주쿠"],
+  "haneda-airport-shibuya": ["하네다 시부야", "하네다공항 시부야 가는법"],
   "shinjuku-shibuya": ["신주쿠 시부야", "야마노테선 시부야"],
   "shinjuku-asakusa": ["신주쿠 아사쿠사", "아사쿠사 가는법"],
   "shinjuku-roppongi": ["신주쿠 롯폰기", "롯폰기 가는법"],
@@ -85,12 +85,12 @@ export async function generateMetadata({
 // 빌드 시 모든 주요 경로 페이지 사전 생성
 export async function generateStaticParams() {
   const KEY_ROUTES = [
-    { from: "narita", to: "shinjuku" },
-    { from: "narita", to: "shibuya" },
-    { from: "narita", to: "tokyo" },
-    { from: "narita", to: "ueno" },
-    { from: "haneda", to: "shinjuku" },
-    { from: "haneda", to: "shibuya" },
+    { from: "narita-airport", to: "shinjuku" },
+    { from: "narita-airport", to: "shibuya" },
+    { from: "narita-airport", to: "tokyo" },
+    { from: "narita-airport", to: "ueno" },
+    { from: "haneda-airport", to: "shinjuku" },
+    { from: "haneda-airport", to: "shibuya" },
     { from: "shinjuku", to: "shibuya" },
     { from: "shinjuku", to: "asakusa" },
     { from: "shinjuku", to: "roppongi" },
