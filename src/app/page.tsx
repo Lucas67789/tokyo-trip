@@ -15,12 +15,12 @@ import ExchangeRateWidget from "@/components/ExchangeRateWidget";
 export const revalidate = 2592000; // 30일 캐시 (무료 티어 ISR Writes 절약)
 
 export const metadata: Metadata = {
-  title: "도쿄 지하철 노선도",
+  title: "도쿄 지하철 노선도 | 도쿄 여행 필수 교통·숙소·관광지 가이드",
   description:
     "도쿄 지하철 노선도 완벽 가이드! 나리타 공항에서 시부야·신주쿠 가는 법, 교통 패스 추천 및 고화질 노선도 다운로드까지 한 번에 해결하세요.",
   alternates: { canonical: "https://tokyotrip.kr" },
   openGraph: {
-    title: "도쿄 지하철 노선도",
+    title: "도쿄 지하철 노선도 | 도쿄 여행 필수 교통·숙소·관광지 가이드",
     description: "도쿄 지하철 노선도 완벽 가이드! 나리타 공항에서 시부야·신주쿠 가는 법, 교통 패스 추천 및 고화질 노선도 다운로드까지 한 번에 해결하세요.",
     url: "https://tokyotrip.kr",
     images: [{ url: "https://tokyotrip.kr/images/og-main.png", width: 1200, height: 630 }],
@@ -189,27 +189,27 @@ export default async function Home() {
   const posts = postsData && postsData.length > 0 ? postsData : [
     {
       id: "sample-post-1",
-      title: "간사이공항에서 난바역 가는법! 라피트 vs 공항급행 전격 비교",
-      slug: "kansai-to-namba",
-      description: "간사이 공항에서 난바역까지 가는 가장 빠르고 저렴한 방법을 비교해 드립니다.",
+      title: "나리타 공항에서 신주쿠, 시부야 가는 법! 스카이라이너 vs 넥스(N'EX) 전격 비교",
+      slug: "narita-to-shinjuku-shibuya",
+      description: "나리타 공항에서 도쿄 도심(신주쿠, 시부야)까지 가는 가장 빠르고 저렴한 방법을 비교해 드립니다.",
       thumbnail_url: "https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=800&q=80",
       category: "교통가이드"
     },
     {
       id: "sample-post-2",
-      title: "유니버설 스튜디오 재팬(USJ) 닌텐도 월드 확약권 받는 꿀팁",
-      slug: "usj-nintendo-world",
-      description: "오픈런 없이도 닌텐도 월드에 무조건 입장할 수 있는 방법을 소개합니다.",
+      title: "도쿄 서브웨이 티켓 24/48/72시간권 뽕뽑는 완벽 가이드",
+      slug: "tokyo-subway-ticket-guide",
+      description: "도쿄 메트로와 도에이 지하철을 무제한 탑승할 수 있는 필수 교통 패스의 모든 것.",
       thumbnail_url: "https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?auto=format&fit=crop&w=800&q=80",
-      category: "관광지"
+      category: "교통패스"
     },
     {
       id: "sample-post-3",
-      title: "도톤보리 필수 맛집 베스트 5 (가성비+로컬 추천)",
-      slug: "dotonbori-restaurants",
-      description: "오사카 여행에서 빼놓을 수 없는 도톤보리 식도락! 로컬들이 추천하는 진짜 맛집 리스트.",
+      title: "디즈니랜드 지하철로 가는 법 총정리 (마이하마역)",
+      slug: "how-to-go-disneyland",
+      description: "도쿄역에서 디즈니랜드와 디즈니씨까지 헤매지 않고 가는 가장 정확한 루트 안내.",
       thumbnail_url: "https://images.unsplash.com/photo-1558222218-b7b54eede3f3?auto=format&fit=crop&w=800&q=80",
-      category: "맛집"
+      category: "관광지"
     }
   ];
 
@@ -224,7 +224,9 @@ export default async function Home() {
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "홈", item: "https://tokyotrip.kr" }
+        { "@type": "ListItem", position: 1, name: "홈", item: "https://tokyotrip.kr" },
+        { "@type": "ListItem", position: 2, name: "도쿄", item: "https://tokyotrip.kr" },
+        { "@type": "ListItem", position: 3, name: "도쿄 지하철 노선도", item: "https://tokyotrip.kr" }
       ]
     },
     primaryImageOfPage: { "@id": "https://tokyotrip.kr/#primaryimage" },
@@ -264,26 +266,26 @@ export default async function Home() {
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "간사이 공항에서 오사카 시내(난바역)까지 가장 빨리 가는 방법은 무엇인가요?",
+        "name": "나리타 공항에서 신주쿠, 시부야까지 가장 빠른 방법은 무엇인가요?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "간사이 공항에서 난바역까지는 '난카이 라피트(Rapi:t) 특급열차'를 이용하시는 것이 가장 빠릅니다. 지정좌석제로 운영되며 환승 없이 약 34분 만에 난바역에 도착할 수 있어 여행객들에게 가장 인기가 높습니다."
+          "text": "나리타 익스프레스(N'EX)를 이용하면 환승 없이 신주쿠, 시부야, 도쿄역까지 바로 갈 수 있어 가장 편리합니다. 반면 스카이라이너는 닛포리나 우에노까지 가장 빠르게(약 36분) 이동한 뒤 야마노테선으로 환승하는 방식입니다."
         }
       },
       {
         "@type": "Question",
-        "name": "오사카 주유패스(Osaka Amazing Pass)는 어떤 혜택이 있나요?",
+        "name": "도쿄 서브웨이 티켓으로 JR 야마노테선을 탈 수 있나요?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "오사카 주유패스 하나면 오사카 시내의 지하철과 버스를 무제한으로 탑승할 수 있습니다. 또한 오사카성 천수각, 우메다 스카이빌딩 공중정원, 헵파이브 관람차 등 오사카의 대표 관광지 40여 곳을 무료로 입장할 수 있어 필수 교통패스로 꼽힙니다."
+          "text": "아니요, 탑승할 수 없습니다. 도쿄 서브웨이 티켓으로는 '도쿄 메트로'와 '도에이 지하철' 13개 노선만 무제한 이용 가능합니다. JR 노선(야마노테선 등)을 이용하려면 스이카(Suica)나 파스모(Pasmo) 같은 교통카드를 따로 사용하셔야 합니다."
         }
       },
       {
         "@type": "Question",
-        "name": "우메다역과 오사카역은 같은 곳인가요?",
+        "name": "도쿄 디즈니랜드는 지하철로 어떻게 가나요?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "네, 사실상 같은 위치에 있는 역입니다. 오사카 메트로(지하철)를 탑승할 때는 '우메다역'이라고 부르며, JR(철도)을 탑승할 때는 '오사카역'이라고 부릅니다. 두 역은 거대한 지하상가로 서로 연결되어 있어 도보로 이동 및 환승이 가능합니다."
+          "text": "도쿄역에서 JR 게이요선(Keiyo Line) 또는 무사시노선을 타고 마이하마역(Maihama Station)에서 하차하시면 됩니다. 마이하마역에 내리면 도쿄 디즈니랜드와 디즈니씨로 가는 리조트 라인을 탈 수 있습니다."
         }
       }
     ]
@@ -322,14 +324,14 @@ export default async function Home() {
             
             <div className="mb-8">
               <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
-                도쿄 여행 <span className="text-cyan-400">플래너</span>
+                도쿄 지하철 <span className="text-cyan-400">노선도</span>
               </h1>
               <p className="text-lg text-white/60 font-medium mt-3">
                 출발지와 도착지를 선택하면 도쿄의 복잡한 지하철망을 가장 직관적으로 안내합니다.
               </p>
             </div>
             
-            <Suspense fallback={<div className="h-96 flex items-center justify-center text-cyan-500/50 font-bold animate-pulse">네트워크 연결 중...</div>}>
+            <Suspense fallback={<div className="h-96 flex items-center justify-center animate-pulse"><div className="w-10 h-10 border-4 border-cyan-500/30 border-t-cyan-400 rounded-full animate-spin"></div></div>}>
               <JourneyVisualizer 
                 stations={stations || []}
                 attractions={attractions || []}
@@ -342,11 +344,11 @@ export default async function Home() {
 
           {/* 2. 날씨 및 운행 상태 타일 (Bento Item) */}
           <section className="md:col-span-4 lg:col-span-3 flex flex-col gap-4 md:gap-6">
-            <Suspense fallback={<div className="bg-[#1A2235]/60 backdrop-blur-2xl border border-white/5 rounded-[2rem] p-6 shadow-lg h-full flex items-center justify-center animate-pulse"><p className="text-cyan-500/50 font-bold text-sm">환율 동기화 중...</p></div>}>
+            <Suspense fallback={<div className="bg-[#1A2235]/60 backdrop-blur-2xl border border-white/5 rounded-[2rem] p-6 shadow-lg h-full flex items-center justify-center animate-pulse"><div className="w-6 h-6 border-2 border-cyan-500/30 border-t-cyan-400 rounded-full animate-spin"></div></div>}>
               <ExchangeRateWidget />
             </Suspense>
 
-            <Suspense fallback={<div className="bg-[#1A2235]/60 backdrop-blur-2xl border border-white/5 rounded-[2rem] p-6 shadow-lg h-full flex flex-col justify-center items-center animate-pulse"><p className="text-cyan-500/50 font-bold text-sm">날씨 동기화 중...</p></div>}>
+            <Suspense fallback={<div className="bg-[#1A2235]/60 backdrop-blur-2xl border border-white/5 rounded-[2rem] p-6 shadow-lg h-full flex flex-col justify-center items-center animate-pulse"><div className="w-6 h-6 border-2 border-cyan-500/30 border-t-cyan-400 rounded-full animate-spin"></div></div>}>
               <WeatherWidget />
             </Suspense>
           </section>
@@ -465,6 +467,22 @@ export default async function Home() {
                   등록된 패스 정보가 없습니다.
                 </p>
               )}
+            </div>
+          </section>
+
+          {/* 7. SEO 내부 링크망 */}
+          <section className="md:col-span-12 bg-transparent mt-4 border-t border-white/10 pt-6">
+            <h3 className="text-white/40 text-sm font-bold mb-3">주요 역 및 노선 탐색</h3>
+            <div className="flex flex-wrap gap-x-4 gap-y-2">
+              <Link href="/station/shinjuku" className="text-xs text-white/50 hover:text-cyan-400 transition-colors">신주쿠역 가볼만한곳</Link>
+              <Link href="/station/shibuya" className="text-xs text-white/50 hover:text-cyan-400 transition-colors">시부야역 호텔</Link>
+              <Link href="/station/tokyo" className="text-xs text-white/50 hover:text-cyan-400 transition-colors">도쿄역 환승</Link>
+              <Link href="/station/ueno" className="text-xs text-white/50 hover:text-cyan-400 transition-colors">우에노역 공항철도</Link>
+              <Link href="/station/ginza" className="text-xs text-white/50 hover:text-cyan-400 transition-colors">긴자 노선도</Link>
+              <Link href="/station/asakusa" className="text-xs text-white/50 hover:text-cyan-400 transition-colors">아사쿠사 숙소 추천</Link>
+              <Link href="/" className="text-xs text-white/50 hover:text-cyan-400 transition-colors">긴자선</Link>
+              <Link href="/" className="text-xs text-white/50 hover:text-cyan-400 transition-colors">마루노우치선</Link>
+              <Link href="/" className="text-xs text-white/50 hover:text-cyan-400 transition-colors">야마노테선</Link>
             </div>
           </section>
 

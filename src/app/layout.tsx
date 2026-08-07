@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
     template: "%s | 도쿄 메트로 투어",
-    default: "도쿄 지하철 노선도",
+    default: "도쿄 지하철 노선도 | 도쿄 여행 필수 교통·숙소·관광지 가이드",
   },
   description:
     "도쿄 지하철 노선도 완벽 가이드! 나리타 공항에서 시부야·신주쿠 가는 법, 교통 패스 추천 및 고화질 노선도 다운로드까지 한 번에 해결하세요.",
