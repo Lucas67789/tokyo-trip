@@ -44,7 +44,12 @@ export const METRO_LINES: Record<string, LineInfo> = {
   keikyu: { id: "keikyu", name: "게이큐 공항선", color: "#00A1E9", code: "KK" },
   keisei_skyaccess: { id: "keisei_skyaccess", name: "게이세이 스카이 액세스", color: "#FF7F00", code: "KS", is_express: true },
   monorail: { id: "monorail", name: "도쿄 모노레일", color: "#D7C447", code: "MO" },
-  jr_keiyo: { id: "jr_keiyo", name: "JR 게이요선", color: "#C9242F", code: "JE" }
+  jr_keiyo: { id: "jr_keiyo", name: "JR 게이요선", color: "#C9242F", code: "JE" },
+  jr_chuo: { id: "jr_chuo", name: "JR 츄오선", color: "#F15A22", code: "JC" },
+  jr_sobu: { id: "jr_sobu", name: "JR 츄오·소부선", color: "#FFD400", code: "JB" },
+  yurikamome: { id: "yurikamome", name: "유리카모메", color: "#0078FF", code: "U" },
+  inokashira: { id: "inokashira", name: "게이오 이노카시라선", color: "#CC88C2", code: "IN" },
+  toyoko: { id: "toyoko", name: "도큐 도요코선", color: "#DA0442", code: "TY" }
 };
 
 export const LINE_STATIONS_RAW: Record<string, StationData[]> = {
@@ -397,6 +402,54 @@ export const LINE_STATIONS_RAW: Record<string, StationData[]> = {
     { slug: "yurakucho", name_ko: "유라쿠초", name_en: "Yurakucho", name_jp: "有楽町", lines: [] },
     { slug: "tokyo", name_ko: "도쿄", name_en: "Tokyo", name_jp: "東京", lines: [] },
   ],
+  jr_chuo: [
+    { slug: "tokyo", name_ko: "도쿄", name_en: "Tokyo", name_jp: "東京", lines: [] },
+    { slug: "kanda", name_ko: "칸다", name_en: "Kanda", name_jp: "神田", lines: [] },
+    { slug: "ochanomizu", name_ko: "오차노미즈", name_en: "Ochanomizu", name_jp: "御茶ノ水", lines: [] },
+    { slug: "yotsuya", name_ko: "요쓰야", name_en: "Yotsuya", name_jp: "四ツ谷", lines: [] },
+    { slug: "shinjuku", name_ko: "신주쿠", name_en: "Shinjuku", name_jp: "新宿", lines: [] },
+    { slug: "nakano", name_ko: "나카노", name_en: "Nakano", name_jp: "中野", lines: [] },
+    { slug: "koenji", name_ko: "코엔지", name_en: "Koenji", name_jp: "高円寺", lines: [] },
+    { slug: "kichijoji", name_ko: "기치조지", name_en: "Kichijoji", name_jp: "吉祥寺", lines: [] },
+  ],
+  jr_sobu: [
+    { slug: "shinjuku", name_ko: "신주쿠", name_en: "Shinjuku", name_jp: "新宿", lines: [] },
+    { slug: "yoyogi", name_ko: "요요기", name_en: "Yoyogi", name_jp: "代々木", lines: [] },
+    { slug: "sendagaya", name_ko: "센다가야", name_en: "Sendagaya", name_jp: "千駄ケ谷", lines: [] },
+    { slug: "shinano-machi", name_ko: "시나노마치", name_en: "Shinano-machi", name_jp: "信濃町", lines: [] },
+    { slug: "yotsuya", name_ko: "요쓰야", name_en: "Yotsuya", name_jp: "四ツ谷", lines: [] },
+    { slug: "ichigaya", name_ko: "이치가야", name_en: "Ichigaya", name_jp: "市ケ谷", lines: [] },
+    { slug: "iidabashi", name_ko: "이다바시", name_en: "Iidabashi", name_jp: "飯田橋", lines: [] },
+    { slug: "suidobashi", name_ko: "스이도바시", name_en: "Suidobashi", name_jp: "水道橋", lines: [] },
+    { slug: "ochanomizu", name_ko: "오차노미즈", name_en: "Ochanomizu", name_jp: "御茶ノ水", lines: [] },
+    { slug: "akihabara", name_ko: "아키하바라", name_en: "Akihabara", name_jp: "秋葉原", lines: [] },
+    { slug: "asakuabashi", name_ko: "아사쿠사바시", name_en: "Asakusabashi", name_jp: "浅草橋", lines: [] },
+    { slug: "ryogoku", name_ko: "료고쿠", name_en: "Ryogoku", name_jp: "両国", lines: [] },
+  ],
+  yurikamome: [
+    { slug: "shimbashi", name_ko: "신바시", name_en: "Shimbashi", name_jp: "新橋", lines: [] },
+    { slug: "shiodome", name_ko: "시오도메", name_en: "Shiodome", name_jp: "汐留", lines: [] },
+    { slug: "odaiba-kaihinkoen", name_ko: "오다이바카이힌코엔", name_en: "Odaiba-kaihinkoen", name_jp: "お台場海浜公園", lines: [] },
+    { slug: "daiba", name_ko: "다이바", name_en: "Daiba", name_jp: "台場", lines: [] },
+    { slug: "tokyo-teleport", name_ko: "도쿄텔레포트", name_en: "Tokyo-teleport", name_jp: "東京テレポート", lines: [] },
+    { slug: "toyosu", name_ko: "도요스", name_en: "Toyosu", name_jp: "豊洲", lines: [] },
+  ],
+  inokashira: [
+    { slug: "shibuya", name_ko: "시부야", name_en: "Shibuya", name_jp: "渋谷", lines: [] },
+    { slug: "shinsen", name_ko: "신센", name_en: "Shinsen", name_jp: "神泉", lines: [] },
+    { slug: "shimokitazawa", name_ko: "시모키타자와", name_en: "Shimokitazawa", name_jp: "下北沢", lines: [] },
+    { slug: "meidaimae", name_ko: "메이다이마에", name_en: "Meidaimae", name_jp: "明大前", lines: [] },
+    { slug: "kichijoji", name_ko: "기치조지", name_en: "Kichijoji", name_jp: "吉祥寺", lines: [] },
+  ],
+  toyoko: [
+    { slug: "shibuya", name_ko: "시부야", name_en: "Shibuya", name_jp: "渋谷", lines: [] },
+    { slug: "daikanyama", name_ko: "다이칸야마", name_en: "Daikanyama", name_jp: "代官山", lines: [] },
+    { slug: "naka-meguro", name_ko: "나카메구로", name_en: "Naka-meguro", name_jp: "中目黒", lines: [] },
+    { slug: "yutenji", name_ko: "유텐지", name_en: "Yutenji", name_jp: "祐天寺", lines: [] },
+    { slug: "gakugeidaigaku", name_ko: "가쿠게이다이가쿠", name_en: "Gakugeidaigaku", name_jp: "学芸大学", lines: [] },
+    { slug: "jiyugaoka", name_ko: "지유가오카", name_en: "Jiyugaoka", name_jp: "自由が丘", lines: [] },
+    { slug: "yokohama", name_ko: "요코하마", name_en: "Yokohama", name_jp: "横浜", lines: [] },
+  ]
 };
 
 const EXTERNAL_STATIONS: Record<string, StationData> = {
@@ -502,7 +555,11 @@ const SPECIAL_CONNECTIONS: Connection[] = [
   { from: "shin-okachimachi", to: "okachimachi", line: "walk", time: 5 },
   { from: "nagatacho", to: "akasaka-mitsuke", line: "walk", time: 3 },
   { from: "toranomon", to: "toranomon-hills", line: "walk", time: 5 },
-  { from: "hibiya", to: "yurakucho", line: "walk", time: 3 }
+  { from: "hibiya", to: "yurakucho", line: "walk", time: 3 },
+  // --- 주요 터미널 내부 도보 환승 (새로 추가된 사철 노선 연결용) ---
+  { from: "shinjuku", to: "yoyogi", line: "walk", time: 10 },
+  { from: "shibuya", to: "shinsen", line: "walk", time: 10 },
+  { from: "shibuya", to: "daikanyama", line: "walk", time: 15 }
 ];
 
 SPECIAL_CONNECTIONS.forEach((conn) => {
