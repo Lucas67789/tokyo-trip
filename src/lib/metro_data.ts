@@ -1,4 +1,4 @@
-import { StaticImageData } from "next/image";
+
 
 export type StationData = {
   slug: string;
@@ -488,7 +488,17 @@ const SPECIAL_CONNECTIONS: Connection[] = [
   { from: "naka-okachimachi", to: "ueno-okachimachi", line: "walk", time: 3 },
   { from: "harajuku", to: "meiji-jingumae", line: "walk", time: 3 },
   { from: "daimon", to: "hamamatsucho", line: "walk", time: 5 },
-  { from: "shinjuku", to: "shinjuku-nishiguchi", line: "walk", time: 5 }
+  { from: "shinjuku", to: "shinjuku-nishiguchi", line: "walk", time: 5 },
+  // --- 이름이 다르지만 지하 통로로 연결된 역 ---
+  { from: "awajicho", to: "ogawamachi", line: "walk", time: 3 },
+  { from: "shin-ochanomizu", to: "ogawamachi", line: "walk", time: 5 },
+  { from: "higashi-nihombashi", to: "bakuro-yokoyama", line: "walk", time: 3 },
+  { from: "kasuga", to: "korakuen", line: "walk", time: 5 },
+  { from: "iwamotocho", to: "akihabara", line: "walk", time: 5 },
+  { from: "shin-okachimachi", to: "okachimachi", line: "walk", time: 5 },
+  { from: "nagatacho", to: "akasaka-mitsuke", line: "walk", time: 3 },
+  { from: "toranomon", to: "toranomon-hills", line: "walk", time: 5 },
+  { from: "hibiya", to: "yurakucho", line: "walk", time: 3 }
 ];
 
 SPECIAL_CONNECTIONS.forEach((conn) => {

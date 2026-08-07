@@ -46,7 +46,11 @@ export function findMultipleRoutes(start: string, end: string): RouteResult[] {
   // Strategy 2: Least transfers (환승 최소화, 구글맵 2순위)
   addResult(runDijkstra(start, end, 'LEAST_TRANSFERS'));
 
-  // Strategy 3: Alternative Route (1순위에서 사용한 주요 노선 회피)
+  // Strategy 3: Direct route (환승 0회 직행 루트 탐색)
+  // 환승 패널티를 극단적으로 높여서 직행이 있으면 무조건 찾아냄
+  addResult(runDijkstra(start, end, 'DIRECT'));
+
+  // Strategy 4: Alternative Route (1순위에서 사용한 주요 노선 회피)
   if (shortest) {
     const linesUsed = new Set<string>();
     shortest.steps.forEach(s => {
@@ -57,13 +61,22 @@ export function findMultipleRoutes(start: string, end: string): RouteResult[] {
     }
   }
 
-  return results.sort((a, b) => a.totalTime - b.totalTime).slice(0, 3);
+  // 정렬: 실제 소요 시간에 '환승 1회당 10분'의 체감 패널티를 더한 점수(score)로 정렬
+  // 이렇게 해야 구글맵처럼 시간이 약간 더 걸려도 환승 없는 직행 경로를 1순위로 추천함
+  return results.sort((a, b) => {
+    const scoreA = a.totalTime + (a.transfers || 0) * 10;
+    const scoreB = b.totalTime + (b.transfers || 0) * 10;
+    if (scoreA !== scoreB) return scoreA - scoreB;
+    // 점수가 같다면 진짜 시간이 빠른 순
+    return a.totalTime - b.totalTime;
+  }).slice(0, 3);
 }
+
 
 function runDijkstra(
   start: string, 
   end: string, 
-  strategy: 'SHORTEST' | 'LEAST_TRANSFERS' | 'AVOID_LINES',
+  strategy: 'SHORTEST' | 'LEAST_TRANSFERS' | 'AVOID_LINES' | 'DIRECT',
   avoidLines: string[] = []
 ): RouteResult | null {
   // Multi-Layer Graph Node ID format: "stationSlug|lineId"
@@ -109,6 +122,7 @@ function runDijkstra(
           const l2 = station.lines[j];
           let transferCost = 5; // 기본 환승 5분
           if (strategy === 'LEAST_TRANSFERS') transferCost = 15;
+          if (strategy === 'DIRECT') transferCost = 999;
           addEdge(`${station.slug}|${l1}`, `${station.slug}|${l2}`, transferCost, 'TRANSFER');
         }
       }
@@ -124,6 +138,7 @@ function runDijkstra(
         s2.lines.forEach(l2 => {
           let walkCost = conn.time;
           if (strategy === 'LEAST_TRANSFERS') walkCost += 10;
+          if (strategy === 'DIRECT') walkCost += 999;
           addEdge(`${conn.from}|${l1}`, `${conn.to}|${l2}`, walkCost, 'WALK');
           addEdge(`${conn.to}|${l2}`, `${conn.from}|${l1}`, walkCost, 'WALK');
         });
