@@ -322,7 +322,7 @@ export default async function Home() {
             
             <div className="mb-8">
               <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
-                도쿄 트립 플래너 <span className="text-cyan-400">네트워크</span>
+                도쿄 여행 <span className="text-cyan-400">플래너</span>
               </h1>
               <p className="text-lg text-white/60 font-medium mt-3">
                 출발지와 도착지를 선택하면 도쿄의 복잡한 지하철망을 가장 직관적으로 안내합니다.
