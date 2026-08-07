@@ -29,6 +29,7 @@ export const METRO_LINES: Record<string, LineInfo> = {
   jr_yamanote: { id: "jr_yamanote", name: "JR 야마노테선", color: "#80C241", code: "JY" },
   jr_chuo: { id: "jr_chuo", name: "JR 주오선", color: "#F15A22", code: "JC" },
   jr_keihin: { id: "jr_keihin", name: "JR 게이힌토호쿠선", color: "#00B4E5", code: "JK" },
+  jr_keiyo: { id: "jr_keiyo", name: "JR 게이요선", color: "#C9242B", code: "JE" },
   
   // Airport & Express
   nex: { id: "nex", name: "나리타 익스프레스", color: "#E21F26", code: "NEX", is_express: true },
@@ -174,7 +175,11 @@ const EXTERNAL_STATIONS: Record<string, StationData> = {
   
   // 환승 연결용 추가 맵핑
   "hamamatsucho": { slug: "hamamatsucho", name_ko: "하마마쓰초", name_jp: "浜松町", name_en: "Hamamatsucho", lines: ["jr_yamanote", "monorail"] },
-  "shinagawa": { slug: "shinagawa", name_ko: "시나가와", name_jp: "品川", name_en: "Shinagawa", lines: ["jr_yamanote", "keikyu", "nex"] }
+  "shinagawa": { slug: "shinagawa", name_ko: "시나가와", name_jp: "品川", name_en: "Shinagawa", lines: ["jr_yamanote", "keikyu", "nex"] },
+  
+  // 디즈니랜드 방면
+  "maihama": { slug: "maihama", name_ko: "마이하마(디즈니)", name_jp: "舞浜", name_en: "Maihama", lines: ["jr_keiyo"] },
+  "tokyo": { slug: "tokyo", name_ko: "도쿄", name_jp: "東京", name_en: "Tokyo", lines: ["jr_keiyo"] }
 };
 
 const compiledStations: Record<string, StationData> = {};
@@ -245,6 +250,9 @@ const SPECIAL_CONNECTIONS: Connection[] = [
   // --- 하네다 공항 ---
   { from: "haneda-airport", to: "shinagawa", line: "keikyu", time: 13 },
   { from: "haneda-airport", to: "hamamatsucho", line: "monorail", time: 18 },
+  
+  // --- 디즈니랜드 ---
+  { from: "tokyo", to: "maihama", line: "jr_keiyo", time: 15 },
   
   // --- 주요 도보 환승 패널티 ---
   { from: "ueno", to: "ueno-okachimachi", line: "walk", time: 5 },

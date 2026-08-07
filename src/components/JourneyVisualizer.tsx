@@ -864,7 +864,7 @@ export default function JourneyVisualizer({ initialFrom = "", initialTo = "", st
             { id: 'omote-sando', title: '오모테산도', desc: '세련된 패션과 카페', color: 'from-fuchsia-500 to-pink-600', icon: '☕' },
             { id: 'akihabara', title: '아키하바라', desc: '서브컬처와 게임의 성지', color: 'from-violet-600 to-purple-700', icon: '🎮' },
             { id: 'harajuku', title: '하라주쿠', desc: '일본 스트릿 패션의 중심', color: 'from-pink-400 to-rose-500', icon: '👗' },
-            { id: 'ebisu', title: '에비스', desc: '맥주와 감성적인 밤거리', color: 'from-yellow-600 to-amber-700', icon: '🍺' },
+            { id: 'maihama', title: '디즈니랜드', desc: '꿈과 마법의 왕국 (마이하마역)', color: 'from-pink-500 to-rose-600', icon: '🏰' },
           ].map((dest, idx) => {
             const baseStation = departure || 'shinjuku';
             const dynamicRoutes = findMultipleRoutes(baseStation, dest.id);
