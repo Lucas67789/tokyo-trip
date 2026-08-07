@@ -1,0 +1,28 @@
+﻿??Next.js 16.2.6 (Turbopack)
+- Environments: .env.local
+
+node.exe : ??The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org
+/docs/messages/middleware-to-proxy
+위치 줄:1 문자:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (??The "middlewa...leware-to-proxy:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Creating an optimized production build ...
+??Compiled successfully in 6.4s
+  Running TypeScript ...
+Failed to type check.
+
+./src/lib/pathfinder.ts:106:11
+Type error: 'prev' implicitly has type 'any' because it does not have a type annotation and is referenced directly or i
+ndirectly in its own initializer.
+
+  [90m104 |[0m   [36mwhile[0m (curr !== [36mnull[0m) {
+  [90m105 |[0m     path.unshift(curr);
+[31m[1m>[0m [90m106 |[0m     [36mconst[0m prev = previous[curr];
+  [90m    |[0m           [31m[1m^[0m
+  [90m107 |[0m     curr = prev ? prev.node : [36mnull[0m;
+  [90m108 |[0m   }
+  [90m109 |[0m
+Next.js build worker exited with code: 1 and signal: null

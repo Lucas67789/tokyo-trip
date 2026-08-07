@@ -1,0 +1,28 @@
+﻿??Next.js 16.2.6 (Turbopack)
+- Environments: .env.local
+
+node.exe : ??The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org
+/docs/messages/middleware-to-proxy
+위치 줄:1 문자:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (??The "middlewa...leware-to-proxy:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Creating an optimized production build ...
+??Compiled successfully in 5.4s
+  Running TypeScript ...
+Failed to type check.
+
+./src/lib/pathfinder.ts:138:28
+Type error: 'line' is possibly 'null'.
+
+  [90m136 |[0m
+  [90m137 |[0m     [36mif[0m (action === [32m"START"[0m && lineId) {
+[31m[1m>[0m [90m138 |[0m       instructions.push([32m`[0m${line.name[32m} ?뱀감 ([0m${station.name_ko[32m})`[0
+m);
+  [90m    |[0m                            [31m[1m^[0m
+  [90m139 |[0m       currentLineId = lineId;
+  [90m140 |[0m     } [36melse[0m [36mif[0m (action === [32m"TRANSFER"[0m && lineId) {
+  [90m141 |[0m       instructions.push([32m`[0m${station.name_ko[32m}?먯꽌 [0m${line.name[32m}(??濡??섏듅`[0m);
+Next.js build worker exited with code: 1 and signal: null

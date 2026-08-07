@@ -1,0 +1,26 @@
+﻿??Next.js 16.2.6 (Turbopack)
+- Environments: .env.local
+
+node.exe : ??The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org
+/docs/messages/middleware-to-proxy
+위치 줄:1 문자:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (??The "middlewa...leware-to-proxy:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Creating an optimized production build ...
+??Compiled successfully in 5.8s
+  Running TypeScript ...
+Failed to type check.
+
+./src/app/api/go/route.ts:31:32
+Type error: Cannot find name 'affiliateLink'.
+
+  [90m29 |[0m
+  [90m30 |[0m   [90m// ?占쎄퀬?占쎈줈 302 ?占쎌떆 由щ떎?占쎈젆??泥섎━ (釉뚮씪?占쏙옙? 罹먯떛 諛⑼옙? 占??占쎈┃ ?占쎄퀎 ?占쎌쭛 ?占쎌씠)[0m
+[31m[1m>[0m [90m31 |[0m   [36mreturn[0m [33mNextResponse[0m.redirect(affiliateLink, { status: [35m302[0m });
+  [90m   |[0m                                [31m[1m^[0m
+  [90m32 |[0m }
+  [90m33 |[0m
+Next.js build worker exited with code: 1 and signal: null

@@ -1,0 +1,63 @@
+﻿??Next.js 16.2.6 (Turbopack)
+- Environments: .env.local
+
+node.exe : ??The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org
+/docs/messages/middleware-to-proxy
+위치 줄:1 문자:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (??The "middlewa...leware-to-proxy:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 3 errors:
+./src/app/admin/page.tsx:54:142
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  [90m52 |[0m ...
+  [90m53 |[0m ...
+[31m[1m>[0m [90m54 |[0m ...o} 쨌 ??hotel.lowest_price.toLocaleString()}</span>
+  [90m   |[0m                                              [31m[1m^[0m
+  [90m55 |[0m ...[32m"text-blue-600 hover:text-blue-800 hover:underline font-bold mt-1 text-xs inline-block"[0m>
+  [90m56 |[0m ...
+  [90m57 |[0m ...
+
+Parsing ecmascript source code failed
+
+
+./src/app/layout.tsx:160:13
+Unterminated string constant
+  [90m158 |[0m       [32m"@type"[0m: [32m"TouristDestination"[0m,
+  [90m159 |[0m       [32m"@id"[0m: [32m`[0m${[33mBASE_URL[0m[32m}/#destination`[0m,
+[31m[1m>[0m [90m160 |[0m       name: [32m"?占쎌궗占?,[0m
+  [90m    |[0m             [31m[1m^^^^^^^^[0m
+  [90m161 |[0m [32m      alternateName: ["[0m[33mOsaka[0m[32m", "[0m鸚㏝삫[32m"],[0m
+  [90m162 |[0m [32m      description:[0m
+  [90m163 |[0m [32m        "[0m?占쎈낯 ?????占쎌떆. ?占쏀넠蹂대━, ?占쎌궗移댁꽦, [33mUSJ[0m ???占쎄퀎??愿愿묕옙?占?蹂댁쑀???占쏀뻾 ?占쎈툕.",
+
+Parsing ecmascript source code failed
+
+
+./src/components/JourneyVisualizer.tsx:240:48
+Unterminated string constant
+  [90m238 |[0m ...[32m             setDepQuery(e.target.value);[0m
+  [90m239 |[0m ...[32m             setShowDepList(true);[0m
+[31m[1m>[0m [90m240 |[0m ...[32m             if (departure) setDeparture("[0m[32m");[0m
+  [90m    |[0m                                              [31m[1m^^^[0m
+  [90m241 |[0m ...[32m           }}[0m
+  [90m242 |[0m ...[32m           onFocus={() => setShowDepList(true)}[0m
+  [90m243 |[0m ...[32m           className="[0mw-full bg-slate-[35m50[0m border-[35m2[0m border-slate-[35m100
+[0m rounded-[35m2[0mxl pl-[35m12[0m p..[35m.[0m
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/components/JourneyVisualizer.tsx
+    ./src/app/route/[from]/[to]/page.tsx
+
+
+    at <unknown> (./src/app/admin/page.tsx:54:142)
+    at <unknown> (./src/app/layout.tsx:160:13)
+    at <unknown> (./src/components/JourneyVisualizer.tsx:240:48)

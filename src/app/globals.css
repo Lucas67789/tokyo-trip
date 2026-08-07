@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0A0E17; /* Deep Ink Charcoal */
+  --foreground: #FFFFFF; /* 텍스트 (Pure White) */
+  --muted: #94A3B8; /* 서브 텍스트 (Slate 400) */
+  
+  /* 도쿄 지하철 노선별 색상 */
+  --ginza: #FF9500;
+  --marunouchi: #F62E36;
+  --hibiya: #B5B5AC;
+  --tozai: #009BBF;
+  --chiyoda: #00BB85;
+  --yurakucho: #C1A470;
+  --hanzomon: #8F76D6;
+  --namboku: #00AC9B;
+  --fukutoshin: #9C5E31;
+  --asakusa: #EC6E65;
+  --mita: #006CB6;
+  --shinjuku: #B0C124;
+  --oedo: #CE045B;
+  
+  /* JR 및 주요 사철 */
+  --jr-yamanote: #80C241;
+  --jr-chuo: #F15A22;
+  --jr-keihin: #00B4E5;
+  --nex: #E21F26;
+  --skyliner: #003282;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --font-sans: "Space Grotesk", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  
+  --color-ginza: var(--ginza);
+  --color-marunouchi: var(--marunouchi);
+  --color-hibiya: var(--hibiya);
+  --color-tozai: var(--tozai);
+  --color-chiyoda: var(--chiyoda);
+  --color-yurakucho: var(--yurakucho);
+  --color-hanzomon: var(--hanzomon);
+  --color-namboku: var(--namboku);
+  --color-fukutoshin: var(--fukutoshin);
+  --color-asakusa: var(--asakusa);
+  --color-mita: var(--mita);
+  --color-shinjuku: var(--shinjuku);
+  --color-oedo: var(--oedo);
+  
+  --color-jr-yamanote: var(--jr-yamanote);
+  --color-jr-chuo: var(--jr-chuo);
+  --color-jr-keihin: var(--jr-keihin);
+  --color-nex: var(--nex);
+  --color-skyliner: var(--skyliner);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* 가로 스크롤 메뉴 바에서 스크롤바 숨기기 */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

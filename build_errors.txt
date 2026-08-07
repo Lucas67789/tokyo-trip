@@ -1,0 +1,77 @@
+﻿??Next.js 16.2.6 (Turbopack)
+- Environments: .env.local
+
+node.exe : ??The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org
+/docs/messages/middleware-to-proxy
+위치 줄:1 문자:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (??The "middlewa...leware-to-proxy:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 4 errors:
+./src/app/page.tsx:94:63
+Expected ',', got 'ident'
+  [90m92 |[0m       [32m"@type"[0m: [32m"BreadcrumbList"[0m,
+  [90m93 |[0m       itemListElement: [
+[31m[1m>[0m [90m94 |[0m         { [32m"@type"[0m: [32m"ListItem"[0m, position: [35m1[0m, name: [32m"??, ite
+m: "[0mhttps:[90m//osakatrip.kr" },[0m
+  [90m   |[0m                                                               [31m[1m^^^^^[0m
+  [90m95 |[0m       ],
+  [90m96 |[0m     },
+  [90m97 |[0m   };
+
+Parsing ecmascript source code failed
+
+
+./src/app/admin/page.tsx:34:96
+Unexpected token. Did you mean `{'>'}` or `&gt;`?
+  [90m32 |[0m ...[32meen mb-8"[0m>
+  [90m33 |[0m ...
+[31m[1m>[0m [90m34 |[0m ...[32mt-slate-900 mb-2"[0m>?占쏀뀛 醫낇빀 愿占?/h1>
+  [90m   |[0m                                       [31m[1m^[0m
+  [90m35 |[0m ...?占쎌쭅 理쒓퀬 愿由ъ옄占??占쎄렐 媛?占쏀빀?占쎈떎. [33mSEO[0m 釉붾줈占??占쎌뒪?占쎄낵 ?占쏀뀛 湲곕낯 ?占쎈낫占??占쎈줉?占쎌꽭??</p>
+  [90m36 |[0m ...
+  [90m37 |[0m ...
+
+Parsing ecmascript source code failed
+
+
+./src/app/layout.tsx:33:5
+Unterminated string constant
+  [90m31 |[0m     [32m"媛꾩궗??怨듯빆 ?占쎈컮"[0m,
+  [90m32 |[0m     [32m"?占쎌궗占?寃쎈줈 ?占쎈궡"[0m,
+[31m[1m>[0m [90m33 |[0m     [32m"?占쎌뭅???占쏀뵾??,[0m
+  [90m   |[0m     [31m[1m^^^^^^^^^^^^^^[0m
+  [90m34 |[0m [32m    "[0m[33mUSJ[0m 媛?占쎈쾿[32m",[0m
+  [90m35 |[0m [32m    "[0m?占쎌궗占??占쎌쑀?占쏀뻾[32m",[0m
+  [90m36 |[0m [32m    "[0m?占쎌궗占?留쏆쭛[32m",[0m
+
+Parsing ecmascript source code failed
+
+
+./src/components/JourneyVisualizer.tsx:43:13
+Unterminated string constant
+  [90m41 |[0m   [32m'namba'[0m: [
+  [90m42 |[0m     {
+[31m[1m>[0m [90m43 |[0m       name: [32m'?占쏀넠蹂대━ ?占쏀븯 ?占쎈（占?,[0m
+  [90m   |[0m             [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m44 |[0m [32m      category: '[0m?占쎄꼍[32m',[0m
+  [90m45 |[0m [32m      icon: '[0m?占쏙옙[32m',[0m
+  [90m46 |[0m [32m      description: '[0m湲由ъ퐫???占쎌삩?占쎌씤??占??占쎌뿉?? 諛ㅼ뿉 ?占쎌슧 鍮쏅굹???占쎌궗移댁쓽 ?占쎄뎬',
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/components/JourneyVisualizer.tsx
+    ./src/app/route/[from]/[to]/page.tsx
+
+
+    at <unknown> (./src/app/page.tsx:94:63)
+    at <unknown> (./src/app/admin/page.tsx:34:96)
+    at <unknown> (./src/app/layout.tsx:33:5)
+    at <unknown> (./src/components/JourneyVisualizer.tsx:43:13)

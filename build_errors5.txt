@@ -1,0 +1,34 @@
+﻿??Next.js 16.2.6 (Turbopack)
+- Environments: .env.local
+
+node.exe : ??The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org
+/docs/messages/middleware-to-proxy
+위치 줄:1 문자:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (??The "middlewa...leware-to-proxy:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 1 errors:
+./src/app/actions/hotelActions.ts:44:3
+Expected ',', got 'ident'
+  [90m42 |[0m
+  [90m43 |[0m   [90m// 硫붿씤 ?占쎌씠吏 占?愿由ъ옄 ?占쎌씠吏 罹먯떆 ?占쎈━占?  revalidatePath('/');[0m
+[31m[1m>[0m [90m44 |[0m   revalidatePath([32m'/admin'[0m);
+  [90m   |[0m   [31m[1m^^^^^^^^^^^^^^[0m
+  [90m45 |[0m   
+  [90m46 |[0m   [36mreturn[0m { success: [36mtrue[0m };
+  [90m47 |[0m }
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/app/actions/hotelActions.ts
+    ./src/app/admin/page.tsx
+
+
+    at <unknown> (./src/app/actions/hotelActions.ts:44:3)
