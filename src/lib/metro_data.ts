@@ -42,6 +42,7 @@ export const METRO_LINES: Record<string, LineInfo> = {
   skyliner: { id: "skyliner", name: "게이세이 스카이라이너", color: "#002F6C", code: "KS", is_express: true },
   nex: { id: "nex", name: "나리타 익스프레스", color: "#E2001A", code: "NEX", is_express: true },
   keikyu: { id: "keikyu", name: "게이큐 공항선", color: "#00A1E9", code: "KK" },
+  keisei_skyaccess: { id: "keisei_skyaccess", name: "게이세이 스카이 액세스", color: "#FF7F00", code: "KS", is_express: true },
   monorail: { id: "monorail", name: "도쿄 모노레일", color: "#D7C447", code: "MO" },
   jr_keiyo: { id: "jr_keiyo", name: "JR 게이요선", color: "#C9242F", code: "JE" }
 };
@@ -400,10 +401,11 @@ export const LINE_STATIONS_RAW: Record<string, StationData[]> = {
 
 const EXTERNAL_STATIONS: Record<string, StationData> = {
   // 공항 방면
-  "narita-airport": { slug: "narita-airport", name_ko: "나리타 공항", name_jp: "成田空港", name_en: "Narita Airport", lines: ["nex", "skyliner"] },
+  "narita-airport": { slug: "narita-airport", name_ko: "나리타 공항", name_jp: "成田空港", name_en: "Narita Airport", lines: ["nex", "skyliner", "keisei_skyaccess"] },
   "haneda-airport": { slug: "haneda-airport", name_ko: "하네다 공항", name_jp: "羽田空港", name_en: "Haneda Airport", lines: ["keikyu", "monorail"] },
   
   // 환승 연결용 추가 맵핑
+  "oshiage": { slug: "oshiage", name_ko: "오시아게", name_jp: "押上", name_en: "Oshiage", lines: ["hanzomon", "asakusa", "keisei_skyaccess"] },
   "hamamatsucho": { slug: "hamamatsucho", name_ko: "하마마쓰초", name_jp: "浜松町", name_en: "Hamamatsucho", lines: ["jr_yamanote", "monorail"] },
   "shinagawa": { slug: "shinagawa", name_ko: "시나가와", name_jp: "品川", name_en: "Shinagawa", lines: ["jr_yamanote", "keikyu", "nex"] },
   
@@ -473,6 +475,8 @@ const SPECIAL_CONNECTIONS: Connection[] = [
   { from: "narita-airport", to: "tokyo", line: "nex", time: 53 },
   { from: "tokyo", to: "shibuya", line: "nex", time: 20 },
   { from: "shibuya", to: "shinjuku", line: "nex", time: 5 },
+
+  { from: "narita-airport", to: "oshiage", line: "keisei_skyaccess", time: 47 },
   
   // --- 하네다 공항 ---
   { from: "haneda-airport", to: "shinagawa", line: "keikyu", time: 13 },

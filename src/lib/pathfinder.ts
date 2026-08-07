@@ -107,7 +107,11 @@ function runDijkstra(
   };
 
   METRO_STATIONS[start].lines.forEach(lineId => {
-    addEdge(startNode, `${start}|${lineId}`, 0, 'START');
+    let boardingPenalty = 0;
+    if (start === "narita-airport" || start === "haneda-airport") {
+      boardingPenalty = 13; // 구글맵과 유사한 공항 터미널 도보 및 탑승 대기 시간 현실화 보정
+    }
+    addEdge(startNode, `${start}|${lineId}`, boardingPenalty, 'START');
   });
 
   METRO_STATIONS[end].lines.forEach(lineId => {
