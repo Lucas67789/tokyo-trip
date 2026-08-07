@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   publisher: SITE_NAME,
   verification: {
     // @ts-ignore
-    naver: "ead1faf7a75aa079fc6a81be56c9c3a441a8c331",
+    naver: "883b2500bc7486ef4650490c72b8606a2a4fa565",
     google: "l8nGoIceTa635TzWCyT9DvNvV6w6lhznc5qWkDg_lfo",
   },
   openGraph: {
