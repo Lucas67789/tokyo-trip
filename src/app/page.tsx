@@ -17,11 +17,11 @@ export const revalidate = 2592000; // 30일 캐시 (무료 티어 ISR Writes 절
 export const metadata: Metadata = {
   title: "도쿄 지하철 노선도",
   description:
-    "도쿄 지하철 노선도(도쿄메트로, 도영지하철, JR 야마노테선 등) 완전 정복 가이드! 나리타공항, 신주쿠역, 시부야역 등 필수 여행지 가는법 및 소요시간 검색. 도쿄 메트로 패스 추천 및 고화질 노선도 다운로드까지 한 번에 해결하세요.",
+    "도쿄 지하철 노선도 완벽 가이드! 나리타 공항에서 시부야·신주쿠 가는 법, 교통 패스 추천 및 고화질 노선도 다운로드까지 한 번에 해결하세요.",
   alternates: { canonical: "https://tokyotrip.kr" },
   openGraph: {
     title: "도쿄 지하철 노선도",
-    description: "도쿄 지하철 노선도(도쿄메트로, 도영지하철, JR 야마노테선 등) 완전 정복 가이드! 나리타공항, 신주쿠역, 시부야역 등 필수 여행지 가는법 및 소요시간 검색. 도쿄 패스 추천 및 고화질 노선도 다운로드까지 한 번에 해결하세요.",
+    description: "도쿄 지하철 노선도 완벽 가이드! 나리타 공항에서 시부야·신주쿠 가는 법, 교통 패스 추천 및 고화질 노선도 다운로드까지 한 번에 해결하세요.",
     url: "https://tokyotrip.kr",
     images: [{ url: "https://tokyotrip.kr/images/og-main.png", width: 1200, height: 630 }],
   },
