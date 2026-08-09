@@ -108,7 +108,6 @@ export async function addPass(formData: FormData) {
   // 캐시 프리징
   revalidatePath('/');
   revalidatePath('/admin');
-  revalidatePath('/subway-test');
 }
 
 export async function deletePass(id: string) {
@@ -125,7 +124,6 @@ export async function deletePass(id: string) {
 
   revalidatePath('/')
   revalidatePath('/admin')
-  revalidatePath('/subway-test')
 }
 
 export async function updatePass(formData: FormData) {
@@ -200,5 +198,4 @@ export async function updatePass(formData: FormData) {
   revalidatePath('/admin');
   revalidatePath('/admin/passes');
   revalidatePath(`/pass/${slug}`);
-  revalidatePath('/subway-test');
 }

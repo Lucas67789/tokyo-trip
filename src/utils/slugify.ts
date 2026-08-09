@@ -1,26 +1,25 @@
 export function romanizeHangul(text: string): string {
   // 고정 매핑 딕셔너리 (호텔, 패스, 역, 명소 등 자주 쓰이는 단어)
   const dictionary: Record<string, string> = {
-    // 호텔 관련
     "온야도": "onyado", "노노": "nono", "신주쿠": "shinjuku", "내추럴": "natural", "핫": "hot",
-    "스프링": "spring", "호텔": "hotel", "스위소텔": "swissotel", "칸데오": "candeo", 
+    "스프링": "spring", "호텔": "hotel", "게이오": "keio", "프린스": "prince", 
     "도쿄": "tokyo", "도큐": "tokyu", "엑셀": "excel", "시부야": "shibuya", 
-    "신사이바시": "shinsaibashi", "난카이": "nankai", "스위스": "swiss", "그란비아": "granvia",
+    "오모테산도": "omotesando", "이케부쿠로": "ikebukuro", "우에노": "ueno", "아사쿠사": "asakusa",
     "뉴": "new", "한큐": "hankyu", "리가": "rihga", "로얄": "royal", "프리미어": "premier",
-    "도미": "dormy", "인": "inn", "네추럴": "natural", "스파": "spa", "힐튼": "hilton",
-    "아파": "apa", "몬테": "monte", "에르망": "herman", "하트": "heart", "하튼": "hearton",
+    "도미": "dormy", "인": "inn", "스파": "spa", "힐튼": "hilton",
+    "아파": "apa", "몬테": "monte", "에르망": "herman", "그레이서리": "gracery",
     "일": "il", "그란": "gran", "센트라": "centara", "그랜드": "grand", "하얏트": "hyatt",
     "메트로": "metro", "더": "the", "플라자": "plaza", "웨스틴": "westin", 
     "인터컨티넨탈": "intercontinental", "쉐라톤": "sheraton", "크라운": "crowne", 
-    "유니버셜": "universal", "포트": "port", "비타": "vita", "타워": "tower", 
+    "디즈니": "disney", "포트": "port", "비타": "vita", "타워": "tower", 
     "싱굴라리": "singulari", "케한": "keihan",
     
     // 패스 관련
-    "스카이라이너": "rapit", "특급": "express", "열차": "train", "메트로패스": "amazing-pass",
-    "하루카": "haruka", "나리타": "kansai", "공항": "airport", "리무진": "limousine",
-    "버스": "bus", "패스": "pass", "이코카": "icoca", "지하철": "subway", 
+    "스카이라이너": "skyliner", "특급": "express", "열차": "train", "나리타": "narita",
+    "익스프레스": "express", "하네다": "haneda", "공항": "airport", "리무진": "limousine",
+    "버스": "bus", "패스": "pass", "스이카": "suica", "파스모": "pasmo", "지하철": "subway", 
     "메트로패스": "metro-pass", "미니": "mini", "와이드": "wide", "티켓": "ticket",
-    "한신": "hanshin", "투어리스트": "tourist", "스루": "thru"
+    "투어리스트": "tourist", "스루": "thru"
   };
 
   let result = text;
