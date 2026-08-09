@@ -169,7 +169,7 @@ export default function MenuManager({ menus: initialMenus }: MenuManagerProps) {
               <input
                 type="text"
                 name="title"
-                placeholder="예: 오사카 여행팁"
+                placeholder="예: 도쿄 여행팁"
                 className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder-slate-400 font-bold"
                 required
               />
@@ -179,7 +179,7 @@ export default function MenuManager({ menus: initialMenus }: MenuManagerProps) {
               <input
                 type="text"
                 name="url"
-                placeholder="예: /post/kansai-to-namba"
+                placeholder="예: /post/narita-to-shinjuku"
                 className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition-all font-mono placeholder-slate-400 text-sm font-bold"
                 required
               />

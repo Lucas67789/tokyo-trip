@@ -253,7 +253,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                       <h3 className="text-sm font-extrabold text-white line-clamp-1 hover:text-blue-600 transition-colors">{pass.name_ko}</h3>
                     </Link>
                   </div>
-                  <p className="text-xs text-white/60 font-medium mb-3 line-clamp-2">{pass.description || "간사이 지역 여행 필수 교통패스"}</p>
+                  <p className="text-xs text-white/60 font-medium mb-3 line-clamp-2">{pass.description || "나리타 지역 여행 필수 교통패스"}</p>
                 </div>
                 <div className="w-full sm:w-auto flex flex-col gap-2 shrink-0">
                   {links.map((link: any, idx: number) => {

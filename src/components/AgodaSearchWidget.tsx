@@ -33,8 +33,8 @@ interface AgodaSearchWidgetProps {
 }
 
 export default function AgodaSearchWidget({
-  destinationName = "오사카, 일본",
-  cityId = "9590",
+  destinationName = "도쿄, 일본",
+  cityId = "5085",
   stationNameKo = "",
 }: AgodaSearchWidgetProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);

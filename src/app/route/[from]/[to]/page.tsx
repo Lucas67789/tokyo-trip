@@ -176,15 +176,15 @@ export default async function RoutePage({
   const faqItems = [
     {
       question: `${fromStation.name_ko}에서 ${toStation.name_ko}까지 어떻게 가나요?`,
-      answer: `${fromStation.name_ko}역(${fromStation.name_jp})에서 오사카 지하철을 이용해 ${toStation.name_ko}역(${toStation.name_jp})까지 이동할 수 있습니다. 환승 유무와 최적 경로는 위 경로 검색 결과를 참고하세요.`,
+      answer: `${fromStation.name_ko}역(${fromStation.name_jp})에서 도쿄 지하철을 이용해 ${toStation.name_ko}역(${toStation.name_jp})까지 이동할 수 있습니다. 환승 유무와 최적 경로는 위 경로 검색 결과를 참고하세요.`,
     },
     {
       question: `${fromStation.name_ko}에서 ${toStation.name_ko}까지 교통비는 얼마인가요?`,
-      answer: `오사카 지하철 일반 요금 기준으로 이동 거리에 따라 190엔~380엔 정도입니다. 오사카 메트로 1일권이나 교통패스를 사용하면 더 저렴하게 이동할 수 있습니다.`,
+      answer: `도쿄 지하철 일반 요금 기준으로 이동 거리에 따라 190엔~380엔 정도입니다. 도쿄 메트로 1일권이나 교통패스를 사용하면 더 저렴하게 이동할 수 있습니다.`,
     },
     {
       question: `${toStation.name_ko} 근처에 추천 숙소가 있나요?`,
-      answer: `${toStation.name_ko}역 주변에는 다양한 호텔과 숙소가 있습니다. 오사카 메트로 투어에서 역별 추천 호텔 정보를 확인해 보세요.`,
+      answer: `${toStation.name_ko}역 주변에는 다양한 호텔과 숙소가 있습니다. 도쿄 메트로 가이드에서 역별 추천 호텔 정보를 확인해 보세요.`,
     },
   ];
 
@@ -212,7 +212,7 @@ export default async function RoutePage({
       {
         "@type": "HowTo",
         name: `${fromStation.name_ko}에서 ${toStation.name_ko} 가는 법`,
-        description: `오사카 지하철로 ${fromStation.name_ko}(${fromStation.name_jp})에서 ${toStation.name_ko}(${toStation.name_jp})까지 가는 최적 경로, 소요시간, 요금 안내`,
+        description: `도쿄 지하철로 ${fromStation.name_ko}(${fromStation.name_jp})에서 ${toStation.name_ko}(${toStation.name_jp})까지 가는 최적 경로, 소요시간, 요금 안내`,
         inLanguage: "ko-KR",
         image: `${BASE_URL}/images/og-main.png`,
         step: [
@@ -279,7 +279,7 @@ export default async function RoutePage({
           {fromStation.name_en} → {toStation.name_en}
         </p>
         <p className="text-slate-500 max-w-2xl mx-auto leading-relaxed">
-          오사카 지하철로 {fromStation.name_ko}에서 {toStation.name_ko}까지
+          도쿄 지하철로 {fromStation.name_ko}에서 {toStation.name_ko}까지
           가는 최적 경로, 소요시간, 요금을 비교하세요.
         </p>
       </header>
@@ -289,13 +289,13 @@ export default async function RoutePage({
         className="w-full max-w-6xl px-4 pt-10"
         aria-label={`${fromStation.name_ko}→${toStation.name_ko} 경로 안내`}
       >
-        {((from === "namba" && to === "kix") || (from === "kix" && to === "namba")) && (
+        {((from === "shinjuku" && to === "kix") || (from === "kix" && to === "shinjuku")) && (
           <div className="mb-8 p-6 bg-red-50 border-2 border-red-200 rounded-2xl shadow-sm text-center max-w-4xl mx-auto">
             <p className="text-red-700 font-extrabold text-lg md:text-xl flex flex-col md:flex-row items-center justify-center gap-2">
-              <span>🚨</span> 난바역? 난카이 난바역? 라피트는 무조건 난카이 난바역에서 탑승입니다!
+              <span>🚨</span> 신주쿠역? 난카이 신주쿠역? 스카이라이너는 무조건 난카이 신주쿠역에서 탑승입니다!
             </p>
             <p className="text-red-600 text-sm md:text-base mt-2 font-medium">
-              일반 지하철 난바역과 난카이 난바역은 완전 다른 곳입니다. 공항으로 가는 라피트나 공항급행을 타시려면 '난카이 선(Nankai Line)' 표지판을 따라 난카이 난바역으로 가셔야 합니다!
+              일반 지하철 신주쿠역과 난카이 신주쿠역은 완전 다른 곳입니다. 공항으로 가는 스카이라이너나 공항급행을 타시려면 '난카이 선(Nankai Line)' 표지판을 따라 난카이 신주쿠역으로 가셔야 합니다!
             </p>
           </div>
         )}

@@ -43,7 +43,7 @@ export async function generateMetadata({
       `${nameKo}역 호텔`,
       `${nameKo} 숙소`,
       `${nameKo}역 근처 호텔`,
-      `오사카 ${nameKo}`,
+      `도쿄 ${nameKo}`,
       `${nameEn} hotel`,
       `${nameEn} accommodation`,
       "도쿄 호텔 추천",

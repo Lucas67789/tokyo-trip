@@ -33,14 +33,14 @@ export async function GET(request: Request) {
   }
 
   const cookieStore = await cookies();
-  let sessionId = cookieStore.get('osaka_session_id')?.value;
+  let sessionId = cookieStore.get('tokyo_session_id')?.value;
   
   // 아고다로 302 임시 리다이렉트 처리 (브라우저 캐싱 방지 및 클릭 통계 수집 용이)
   const response = NextResponse.redirect(affiliateLink, { status: 302 });
 
   if (!sessionId) {
     sessionId = crypto.randomUUID();
-    response.cookies.set('osaka_session_id', sessionId, { 
+    response.cookies.set('tokyo_session_id', sessionId, { 
       path: '/', 
       maxAge: 60 * 60 * 24 * 365,
       httpOnly: true,

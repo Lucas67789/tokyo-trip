@@ -19,13 +19,13 @@ export async function POST(request: Request) {
     }
 
     const cookieStore = await cookies();
-    let sessionId = cookieStore.get('osaka_session_id')?.value;
+    let sessionId = cookieStore.get('tokyo_session_id')?.value;
     
     const response = NextResponse.json({ success: true });
     
     if (!sessionId) {
       sessionId = crypto.randomUUID();
-      response.cookies.set('osaka_session_id', sessionId, { 
+      response.cookies.set('tokyo_session_id', sessionId, { 
         path: '/', 
         maxAge: 60 * 60 * 24 * 365,
         httpOnly: true,

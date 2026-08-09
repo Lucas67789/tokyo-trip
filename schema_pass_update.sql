@@ -5,8 +5,8 @@
 -- 1. 패스 기본 정보 테이블
 CREATE TABLE IF NOT EXISTS public.passes (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    slug VARCHAR(100) NOT NULL UNIQUE,       -- 예: 'rapit-express'
-    name_ko VARCHAR(255) NOT NULL,           -- 예: '라피트 특급 열차'
+    slug VARCHAR(100) NOT NULL UNIQUE,       -- 예: 'skyliner'
+    name_ko VARCHAR(255) NOT NULL,           -- 예: '스카이라이너 특급 열차'
     thumbnail_url TEXT,                      -- 목록 및 썸네일에 노출될 이미지 URL
     description TEXT,                        -- 1줄 요약 (리스트에서 보일 설명)
     content TEXT,                            -- 상세 설명 (블로그형 본문 내용, 마크다운/HTML)

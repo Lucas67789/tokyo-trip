@@ -227,7 +227,7 @@ export default async function DashboardPage(props: { searchParams: Promise<{ per
             사이트 종합 대시보드
           </h1>
           <p className="text-slate-500 font-medium">
-            오사카트립 전체 통계를 한눈에 확인합니다. 조회수, 클릭수, 콘텐츠 현황을 실시간으로 모니터링하세요.
+            도쿄트립 전체 통계를 한눈에 확인합니다. 조회수, 클릭수, 콘텐츠 현황을 실시간으로 모니터링하세요.
           </p>
         </div>
         

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "개인정보처리방침",
-  description: "오사카 메트로 투어의 개인정보처리방침입니다.",
+  description: "도쿄 메트로 가이드의 개인정보처리방침입니다.",
 };
 
 export default function PrivacyPage() {
@@ -15,7 +15,7 @@ export default function PrivacyPage() {
         <section>
           <h2 className="text-xl font-bold text-slate-900 mb-3">1. 개인정보의 처리 목적</h2>
           <p>
-            오사카 메트로 투어(이하 &quot;사이트&quot;)는 다음의 목적을 위하여 개인정보를 처리합니다.
+            도쿄 메트로 가이드(이하 &quot;사이트&quot;)는 다음의 목적을 위하여 개인정보를 처리합니다.
             처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며, 이용 목적이 변경되는 경우에는
             별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.
           </p>
@@ -86,7 +86,7 @@ export default function PrivacyPage() {
             아래와 같이 개인정보 보호책임자를 지정하고 있습니다.
           </p>
           <div className="bg-slate-50 rounded-xl p-4 mt-2 text-sm">
-            <p><strong>담당자:</strong> 오사카 메트로 투어 운영팀</p>
+            <p><strong>담당자:</strong> 도쿄 메트로 가이드 운영팀</p>
             <p><strong>이메일:</strong> geoffreylim330@gmail.com</p>
           </div>
         </section>

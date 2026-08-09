@@ -30,7 +30,7 @@ export default function HotelRegisterForm({ stations }: HotelRegisterFormProps) 
   useEffect(() => {
     if (!agodaLink.trim()) return;
 
-    // 예: https://www.agoda.com/ko-kr/onyado-nono-namba-natural-hot-spring/hotel/osaka-jp.html
+    // 예: https://www.agoda.com/ko-kr/shinjuku-prince-hotel-natural-hot-spring/hotel/tokyo-jp.html
     const agodaRegex = /agoda\.com\/(?:[a-z]{2}-[a-z]{2}\/)?([^\/]+)\/hotel\//i;
     const match = agodaLink.match(agodaRegex);
 
@@ -84,7 +84,7 @@ export default function HotelRegisterForm({ stations }: HotelRegisterFormProps) 
             name="name_ko" 
             value={nameKo}
             onChange={(e) => setNameKo(e.target.value)}
-            placeholder="예: 온야도 노노 난바 내추럴 핫 스프링"
+            placeholder="예: 신주쿠 프린스 호텔"
             className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder-slate-400 font-bold" 
             required 
           />
@@ -102,7 +102,7 @@ export default function HotelRegisterForm({ stations }: HotelRegisterFormProps) 
               setSlug(e.target.value);
               setIsSlugManuallyEdited(true); // 직접 타이핑한 경우 더 이상 자동완성하지 않음
             }}
-            placeholder="예: onyado-nono-namba"
+            placeholder="예: shinjuku-prince-hotel"
             className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none transition-all font-mono placeholder-slate-400 text-sm font-bold" 
             required 
           />

@@ -129,7 +129,7 @@ export default function MainPromoCodeCard({ promo, redirectUrl, detailUrl }: { p
           {/* 썸네일 이미지 영역 */}
           {displayImage && (
             <div className="relative w-full aspect-square sm:aspect-[4/3] -mx-5 -mt-5 mb-5 rounded-t-2xl overflow-hidden border-b border-slate-100">
-              <img src={displayImage} alt={`오사카 여행 필수 혜택, ${promo.partner_name} ${promo.discount_rate} 할인코드 공식 프로모션 썸네일`} className="w-full h-full object-contain bg-slate-50 group-hover:scale-105 transition-transform duration-300 bg-slate-50" />
+              <img src={displayImage} alt={`도쿄 여행 필수 혜택, ${promo.partner_name} ${promo.discount_rate} 할인코드 공식 프로모션 썸네일`} className="w-full h-full object-contain bg-slate-50 group-hover:scale-105 transition-transform duration-300 bg-slate-50" />
             </div>
           )}
 
@@ -214,7 +214,7 @@ export default function MainPromoCodeCard({ promo, redirectUrl, detailUrl }: { p
       {/* 썸네일 이미지 영역 */}
       {displayImage && (
         <div className="relative w-full aspect-square sm:aspect-[4/3] -mx-5 -mt-5 mb-5 rounded-t-2xl overflow-hidden border-b border-slate-100">
-          <img src={displayImage} alt={`오사카 여행 필수 혜택, ${promo.partner_name} ${promo.discount_rate} 할인코드 공식 프로모션 썸네일`} className="w-full h-full object-contain bg-slate-50 group-hover:scale-105 transition-transform duration-300 bg-slate-50" />
+          <img src={displayImage} alt={`도쿄 여행 필수 혜택, ${promo.partner_name} ${promo.discount_rate} 할인코드 공식 프로모션 썸네일`} className="w-full h-full object-contain bg-slate-50 group-hover:scale-105 transition-transform duration-300 bg-slate-50" />
         </div>
       )}
 

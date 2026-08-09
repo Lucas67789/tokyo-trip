@@ -111,7 +111,7 @@ export default function PostEditForm({ initialData, passes = [], attractions = [
             name="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="예: 간사이공항에서 난바역 가는법"
+            placeholder="예: 나리타공항에서 신주쿠역 가는법"
             className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all placeholder-slate-400 font-bold"
             required
           />
@@ -129,7 +129,7 @@ export default function PostEditForm({ initialData, passes = [], attractions = [
               setSlug(e.target.value);
               setIsSlugManuallyEdited(true);
             }}
-            placeholder="예: kansai-to-namba"
+            placeholder="예: narita-to-shinjuku"
             className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all font-mono placeholder-slate-400 text-sm font-bold"
             required
           />
@@ -154,7 +154,7 @@ export default function PostEditForm({ initialData, passes = [], attractions = [
             type="text"
             name="description"
             defaultValue={initialData.description || ""}
-            placeholder="예: 라피트 vs 공항급행, 어떤 게 더 나을까?"
+            placeholder="예: 스카이라이너 vs 공항급행, 어떤 게 더 나을까?"
             className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all placeholder-slate-400 font-bold"
             required
           />
@@ -166,7 +166,7 @@ export default function PostEditForm({ initialData, passes = [], attractions = [
             type="text"
             name="post_title"
             defaultValue={initialPostTitle}
-            placeholder="예: 2026년 간사이공항에서 난바역 가는 법 완벽 가이드"
+            placeholder="예: 2026년 나리타공항에서 신주쿠역 가는 법 완벽 가이드"
             className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all placeholder-slate-400 font-bold text-emerald-700"
           />
         </div>

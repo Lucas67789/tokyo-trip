@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 /**
  * CopyProtection 컴포넌트
- * 사용자가 오사카 지하철 패스 및 상세 가이드를 복사해 갈 때 출처를 자동 표기합니다.
+ * 사용자가 도쿄 지하철 패스 및 상세 가이드를 복사해 갈 때 출처를 자동 표기합니다.
  * 단, 일반 사용자 UX(쿠폰 코드 복사, 짧은 텍스트 복사)에 지장을 주지 않도록 정교하게 필터링합니다.
  */
 export default function CopyProtection() {
@@ -39,7 +39,7 @@ export default function CopyProtection() {
       // 5. 출처 문구 및 동적 원문 링크 포맷팅
       const currentUrl = window.location.href;
       const citationText =
-        `\n\n[출처] 오사카 지하철 노선도 & 오사카 여행지 추천 (https://osakatrip.kr)\n` +
+        `\n\n[출처] 도쿄 지하철 노선도 & 도쿄 여행지 추천 (https://tokyotrip.kr)\n` +
         `(원문 링크: ${currentUrl})`;
 
       const combinedText = originalText + citationText;

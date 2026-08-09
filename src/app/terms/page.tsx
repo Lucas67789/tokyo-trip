@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "이용약관",
-  description: "오사카 메트로 투어의 서비스 이용약관입니다.",
+  description: "도쿄 메트로 가이드의 서비스 이용약관입니다.",
 };
 
 export default function TermsPage() {
@@ -15,7 +15,7 @@ export default function TermsPage() {
         <section>
           <h2 className="text-xl font-bold text-slate-900 mb-3">제1조 (목적)</h2>
           <p>
-            이 약관은 오사카 메트로 투어(이하 &quot;사이트&quot;)가 제공하는 인터넷 관련 서비스(이하 &quot;서비스&quot;)의
+            이 약관은 도쿄 메트로 가이드(이하 &quot;사이트&quot;)가 제공하는 인터넷 관련 서비스(이하 &quot;서비스&quot;)의
             이용 조건 및 절차, 사이트와 이용자의 권리·의무 및 책임사항 등을 규정함을 목적으로 합니다.
           </p>
         </section>
@@ -24,11 +24,11 @@ export default function TermsPage() {
           <h2 className="text-xl font-bold text-slate-900 mb-3">제2조 (서비스의 내용)</h2>
           <p>사이트는 다음과 같은 서비스를 제공합니다.</p>
           <ul className="list-disc pl-6 space-y-1 mt-2">
-            <li>오사카 지하철 노선도 및 경로 안내 서비스</li>
-            <li>오사카 여행 관련 정보(호텔, 교통 패스, 관광지 등) 제공</li>
+            <li>도쿄 지하철 노선도 및 경로 안내 서비스</li>
+            <li>도쿄 여행 관련 정보(호텔, 교통 패스, 관광지 등) 제공</li>
             <li>여행 관련 제휴 서비스 할인코드 안내</li>
             <li>고화질 지하철 노선도 PDF 다운로드</li>
-            <li>기타 오사카 여행에 유용한 콘텐츠 제공</li>
+            <li>기타 도쿄 여행에 유용한 콘텐츠 제공</li>
           </ul>
         </section>
 
@@ -100,7 +100,7 @@ export default function TermsPage() {
           <h2 className="text-xl font-bold text-slate-900 mb-3">제9조 (문의)</h2>
           <p>본 약관과 관련한 문의 사항은 아래로 연락해 주시기 바랍니다.</p>
           <div className="bg-slate-50 rounded-xl p-4 mt-2 text-sm">
-            <p><strong>담당자:</strong> 오사카 메트로 투어 운영팀</p>
+            <p><strong>담당자:</strong> 도쿄 메트로 가이드 운영팀</p>
             <p><strong>이메일:</strong> geoffreylim330@gmail.com</p>
           </div>
         </section>

@@ -30,7 +30,7 @@ export default async function PassesAdminPage() {
     <div className="max-w-7xl mx-auto space-y-8">
       <div>
         <h1 className="text-3xl font-extrabold text-slate-900 mb-2">교통 패스 관리</h1>
-        <p className="text-slate-500 font-medium">라피트, 주유패스 등 교통 패스를 등록하고 노출 대상을 설정합니다.</p>
+        <p className="text-slate-500 font-medium">스카이라이너, 메트로패스 등 교통 패스를 등록하고 노출 대상을 설정합니다.</p>
       </div>
 
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">

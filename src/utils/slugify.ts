@@ -2,9 +2,9 @@ export function romanizeHangul(text: string): string {
   // 고정 매핑 딕셔너리 (호텔, 패스, 역, 명소 등 자주 쓰이는 단어)
   const dictionary: Record<string, string> = {
     // 호텔 관련
-    "온야도": "onyado", "노노": "nono", "난바": "namba", "내추럴": "natural", "핫": "hot",
+    "온야도": "onyado", "노노": "nono", "신주쿠": "shinjuku", "내추럴": "natural", "핫": "hot",
     "스프링": "spring", "호텔": "hotel", "스위소텔": "swissotel", "칸데오": "candeo", 
-    "오사카": "osaka", "도큐": "tokyu", "엑셀": "excel", "우메다": "umeda", 
+    "도쿄": "tokyo", "도큐": "tokyu", "엑셀": "excel", "시부야": "shibuya", 
     "신사이바시": "shinsaibashi", "난카이": "nankai", "스위스": "swiss", "그란비아": "granvia",
     "뉴": "new", "한큐": "hankyu", "리가": "rihga", "로얄": "royal", "프리미어": "premier",
     "도미": "dormy", "인": "inn", "네추럴": "natural", "스파": "spa", "힐튼": "hilton",
@@ -16,8 +16,8 @@ export function romanizeHangul(text: string): string {
     "싱굴라리": "singulari", "케한": "keihan",
     
     // 패스 관련
-    "라피트": "rapit", "특급": "express", "열차": "train", "주유패스": "amazing-pass",
-    "하루카": "haruka", "간사이": "kansai", "공항": "airport", "리무진": "limousine",
+    "스카이라이너": "rapit", "특급": "express", "열차": "train", "메트로패스": "amazing-pass",
+    "하루카": "haruka", "나리타": "kansai", "공항": "airport", "리무진": "limousine",
     "버스": "bus", "패스": "pass", "이코카": "icoca", "지하철": "subway", 
     "메트로패스": "metro-pass", "미니": "mini", "와이드": "wide", "티켓": "ticket",
     "한신": "hanshin", "투어리스트": "tourist", "스루": "thru"

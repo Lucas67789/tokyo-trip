@@ -1,5 +1,5 @@
 /**
- * 오사카 지하철 최단 경로 탐색 엔진 (Dijkstra 알고리즘)
+ * 도쿄 지하철 최단 경로 탐색 엔진 (Dijkstra 알고리즘)
  */
 
 export interface Edge {

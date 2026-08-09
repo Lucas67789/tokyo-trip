@@ -645,7 +645,7 @@ export default function BlockEditor({
                   onChange={(e) => updateHeadingText(block.id, e.target.value)}
                   placeholder={
                     block.subtype === "h2"
-                      ? "대주제 제목 입력 (예: 1. 난바역 가성비 호텔 TOP 3)"
+                      ? "대주제 제목 입력 (예: 1. 신주쿠역 가성비 호텔 TOP 3)"
                       : block.subtype === "h3"
                       ? "중주제 제목 입력 (예: 호텔의 주요 특장점 및 요금)"
                       : "소주제 제목 입력 (예: 숙소 위치 및 이동 동선)"

@@ -371,7 +371,7 @@ export default function StationContentManager({ stations, attractions, siteSetti
             </div>
             <div>
               <label className="block text-sm font-bold text-slate-700 mb-1">명소 이름</label>
-              <input required type="text" value={newAttraction.name} onChange={e => setNewAttraction({...newAttraction, name: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="예: 도톤보리" />
+              <input required type="text" value={newAttraction.name} onChange={e => setNewAttraction({...newAttraction, name: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="예: 시부야 스크램블 교차로" />
             </div>
             <div>
               <label className="block text-sm font-bold text-slate-700 mb-1">카테고리</label>
@@ -385,7 +385,7 @@ export default function StationContentManager({ stations, attractions, siteSetti
           
           <div>
             <label className="block text-sm font-bold text-slate-700 mb-1">1줄 요약 (리스트용)</label>
-            <input required type="text" value={newAttraction.description} onChange={e => setNewAttraction({...newAttraction, description: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="예: 오사카를 대표하는 최고의 번화가" />
+            <input required type="text" value={newAttraction.description} onChange={e => setNewAttraction({...newAttraction, description: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="예: 도쿄를 대표하는 최고의 번화가" />
           </div>
 
           <div>
@@ -459,7 +459,7 @@ export default function StationContentManager({ stations, attractions, siteSetti
                   type="text" 
                   value={subwayPassLink} 
                   onChange={e => setSubwayPassLink(e.target.value)}
-                  placeholder="예: https://klook.com/... (오사카 메트로 패스)"
+                  placeholder="예: https://klook.com/... (도쿄 메트로 패스)"
                   className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                 />
               </div>
@@ -469,7 +469,7 @@ export default function StationContentManager({ stations, attractions, siteSetti
                   type="text" 
                   value={expressPassLink} 
                   onChange={e => setExpressPassLink(e.target.value)}
-                  placeholder="예: https://klook.com/... (라피트, 하루카 등)"
+                  placeholder="예: https://klook.com/... (스카이라이너, 하루카 등)"
                   className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                 />
               </div>
@@ -548,7 +548,7 @@ export default function StationContentManager({ stations, attractions, siteSetti
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-1">명소 이름</label>
-                <input required type="text" value={newAttraction.name} onChange={e => setNewAttraction({...newAttraction, name: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="예: 도톤보리" />
+                <input required type="text" value={newAttraction.name} onChange={e => setNewAttraction({...newAttraction, name: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="예: 시부야 스크램블 교차로" />
               </div>
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-1">카테고리</label>
@@ -562,7 +562,7 @@ export default function StationContentManager({ stations, attractions, siteSetti
             
             <div>
               <label className="block text-sm font-bold text-slate-700 mb-1">1줄 요약 (리스트용)</label>
-              <input required type="text" value={newAttraction.description} onChange={e => setNewAttraction({...newAttraction, description: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="예: 오사카를 대표하는 최고의 번화가" />
+              <input required type="text" value={newAttraction.description} onChange={e => setNewAttraction({...newAttraction, description: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="예: 도쿄를 대표하는 최고의 번화가" />
             </div>
 
             <div>

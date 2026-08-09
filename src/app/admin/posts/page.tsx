@@ -29,7 +29,7 @@ export default async function PostsAdminPage() {
     <div className="max-w-7xl mx-auto space-y-8">
       <div>
         <h1 className="text-3xl font-extrabold text-slate-900 mb-2">여행 팁 포스팅 관리</h1>
-        <p className="text-slate-500 font-medium">오사카 여행 팁, 교통 가이드 등 블로그 포스팅을 작성하고 관리합니다.</p>
+        <p className="text-slate-500 font-medium">도쿄 여행 팁, 교통 가이드 등 블로그 포스팅을 작성하고 관리합니다.</p>
       </div>
 
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">

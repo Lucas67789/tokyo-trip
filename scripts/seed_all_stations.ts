@@ -17,7 +17,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 async function seedAllStations() {
   console.log("Starting full stations database sync...");
 
-  const city_id = 'c1000000-0000-0000-0000-000000000001'; // 오사카 도시 ID
+  const city_id = 'c1000000-0000-0000-0000-000000000001'; // 도쿄 도시 ID
 
   const stationsToInsert = Object.entries(METRO_STATIONS).map(([key, station]) => {
     // 자연스러운 한글 역명 이름 지정 규칙
@@ -32,7 +32,7 @@ async function seedAllStations() {
       name_ko: displayName,
       name_en: station.name_en,
       name_jp: station.name_jp,
-      description: `${displayName} 인근의 교통 정보 및 추천 호텔/숙소 목록입니다. 오사카 메트로를 이용해 가장 빠른 길을 탐색해 보세요.`
+      description: `${displayName} 인근의 교통 정보 및 추천 호텔/숙소 목록입니다. 도쿄 메트로를 이용해 가장 빠른 길을 탐색해 보세요.`
     };
   });
 

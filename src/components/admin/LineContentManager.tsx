@@ -106,7 +106,7 @@ export default function LineContentManager({ lines, stations }: LineContentManag
         <div className="bg-indigo-100 p-2 rounded-xl text-indigo-600">
           <LinkIcon size={24} />
         </div>
-        노선별 제휴 링크 관리 (라피트 등)
+        노선별 제휴 링크 관리 (스카이라이너 등)
       </h3>
       
       <div className="space-y-4">
@@ -140,12 +140,12 @@ export default function LineContentManager({ lines, stations }: LineContentManag
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-bold text-slate-700 mb-1">버튼 상품명 텍스트 (예: 클룩 라피트 왕복권)</label>
+            <label className="block text-sm font-bold text-slate-700 mb-1">버튼 상품명 텍스트 (예: 클룩 스카이라이너 왕복권)</label>
             <input 
               type="text" 
               value={linkText} 
               onChange={e => setLinkText(e.target.value)}
-              placeholder="예: 클룩 라피트 특가 예매"
+              placeholder="예: 클룩 스카이라이너 특가 예매"
               className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all placeholder-slate-400"
             />
           </div>

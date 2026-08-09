@@ -46,18 +46,18 @@ export async function generateMetadata(
     .single();
 
   const title = latestPromo?.meta_title
-    || `${partnerName} ${activeMonth} 할인코드 | 총정리 | 오사카트립`;
+    || `${partnerName} ${activeMonth} 할인코드 | 총정리 | 도쿄트립`;
   const description = latestPromo?.meta_description
     || `${partnerName} ${activeMonth} 할인코드 총정리. ${dbPartner?.subtitle || ''} 검증된 최신 할인쿠폰을 지금 바로 사용하세요.`;
 
   return {
     title,
     description,
-    alternates: { canonical: `https://osakatrip.kr/store/${decodedPartner}` },
+    alternates: { canonical: `https://tokyotrip.kr/store/${decodedPartner}` },
     openGraph: {
       title,
       description,
-      url: `https://osakatrip.kr/store/${decodedPartner}`,
+      url: `https://tokyotrip.kr/store/${decodedPartner}`,
     },
   };
 }
@@ -165,7 +165,7 @@ const STORE_INFOS: Record<
         promo_code: "LP5OFF",
         discount_rate: "5% 즉시 추가 할인",
         target_url: "https://www.hotels.com",
-        description: "조건: 오사카 호텔 대상 / 유효기간: 2026년 05월 31일 예약 완료"
+        description: "조건: 도쿄 호텔 대상 / 유효기간: 2026년 05월 31일 예약 완료"
       },
       {
         id: "hotels-2",
@@ -182,22 +182,22 @@ const STORE_INFOS: Record<
     logoUrl: "https://seeklogo.com/images/K/klook-logo-E315024479-seeklogo.com.png",
     logoChar: "클",
     logoBg: "bg-orange-500",
-    subtitle: "액티비티, 오사카 주유패스 및 라피트 열차 최저가 예약",
+    subtitle: "액티비티, 도쿄 메트로패스 및 스카이라이너 열차 최저가 예약",
     mainUrl: "https://www.klook.com",
     fallbackCoupons: [
       {
         id: "klook-1",
         partner_name: "클룩",
-        promo_code: "OSAKAPASS",
-        discount_rate: "주유패스 & 라피트 10% 쿠폰",
+        promo_code: "TOKYOPASS",
+        discount_rate: "메트로패스 & 스카이라이너 10% 쿠폰",
         target_url: "https://www.klook.com",
-        description: "조건: 오사카 테마 패스 구매 시 / 유효기간: 2026년 05월 31일"
+        description: "조건: 도쿄 테마 패스 구매 시 / 유효기간: 2026년 05월 31일"
       },
       {
         id: "klook-2",
         partner_name: "클룩",
         promo_code: "코드 필요없음",
-        discount_rate: "간사이 공항 라피트 왕복권 최대 15% 세일",
+        discount_rate: "나리타 공항 스카이라이너 왕복권 최대 15% 세일",
         target_url: "https://www.klook.com",
         description: "조건: 해당 모바일 링크 연결 시 / 유효기간: 2026년 06월 30일"
       }
@@ -322,7 +322,7 @@ export default async function StorePage({ params }: { params: Promise<{ partner:
     "@type": "WebPage",
     "name": `${storeInfo.name} 할인코드 및 프로모션 총정리`,
     "description": `${storeInfo.name} ${activeMonth} 최신 할인쿠폰 정보를 제공합니다.`,
-    "url": `https://osakatrip.kr/store/${decodedPartner}`,
+    "url": `https://tokyotrip.kr/store/${decodedPartner}`,
     "mainEntity": {
       "@type": "ItemList",
       "itemListElement": summaryRows.map((row, index) => ({
@@ -332,7 +332,7 @@ export default async function StorePage({ params }: { params: Promise<{ partner:
           "@type": "Thing",
           "name": `${storeInfo.name} - ${row.benefit}`,
           "description": `${row.condition} / ${row.expiry}`,
-          "url": `https://osakatrip.kr/store/${decodedPartner}`
+          "url": `https://tokyotrip.kr/store/${decodedPartner}`
         }
       }))
     }
@@ -564,7 +564,7 @@ export default async function StorePage({ params }: { params: Promise<{ partner:
               ) : storeKey === "klook" ? (
                 <>
                   <p className="text-slate-700 font-bold text-center text-base mb-6 leading-relaxed">
-                    클룩에서 주유패스나 익스프레스 패스를 다 담으셨나요?<br/>결제하기 버튼을 누르기 직전, 스크롤을 살짝 내려보시면 <br/>
+                    클룩에서 메트로패스나 익스프레스 패스를 다 담으셨나요?<br/>결제하기 버튼을 누르기 직전, 스크롤을 살짝 내려보시면 <br/>
                     <strong className="text-orange-600 font-black">"할인 수단"</strong> 또는 <strong className="text-orange-600 font-black">"프로모션 코드"</strong> 란이 보일 거예요!
                   </p>
 

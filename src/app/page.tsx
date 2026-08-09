@@ -154,7 +154,7 @@ export default async function Home() {
       promo_code: "AGODA8",
       discount_rate: "전 세계 호텔 8% 추가 할인",
       target_url: "https://www.agoda.com",
-      description: "오사카 인기 역세권 호텔 대상 특별 할인 코드"
+      description: "도쿄 인기 역세권 호텔 대상 특별 할인 코드"
     },
     {
       id: "sample-hotels",
@@ -162,15 +162,15 @@ export default async function Home() {
       promo_code: "LP5OFF",
       discount_rate: "5% 즉시 추가 할인",
       target_url: "https://www.hotels.com",
-      description: "여름 시즌 한정 오사카 숙소 특가 혜택"
+      description: "여름 시즌 한정 도쿄 숙소 특가 혜택"
     },
     {
       id: "sample-klook",
       partner_name: "클룩",
-      promo_code: "OSAKAPASS",
-      discount_rate: "주유패스 & 라피트 10% 쿠폰",
+      promo_code: "TOKYOPASS",
+      discount_rate: "메트로패스 & 스카이라이너 10% 쿠폰",
       target_url: "https://www.klook.com",
-      description: "간사이 공항 수령 패스 결제 시 적용 가능"
+      description: "나리타 공항 수령 패스 결제 시 적용 가능"
     }
   ];
 

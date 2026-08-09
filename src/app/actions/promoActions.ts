@@ -54,7 +54,7 @@ export async function addPromoCode(formData: FormData) {
 
   // SEO 제목 자동 생성 (비어 있으면)
   const meta_title = meta_title_raw
-    || `${partner_name} 할인코드 | ${discount_rate} | 오사카트립`
+    || `${partner_name} 할인코드 | ${discount_rate} | 도쿄트립`
 
   // SEO 설명 자동 생성 (비어 있으면)
   const meta_description = meta_description_raw
@@ -162,7 +162,7 @@ export async function updatePromoCode(id: string, formData: FormData) {
   }
 
   const meta_title = meta_title_raw
-    || `${partner_name} 할인코드 | ${discount_rate} | 오사카트립`
+    || `${partner_name} 할인코드 | ${discount_rate} | 도쿄트립`
 
   const meta_description = meta_description_raw
     || `${partner_name} ${discount_rate} 할인코드를 지금 바로 사용하세요. ${description || ''} 검증된 최신 할인쿠폰을 지금 바로 사용하세요.`

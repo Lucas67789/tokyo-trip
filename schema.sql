@@ -1,5 +1,5 @@
 -- ==========================================
--- 오사카 메트로 투어 전역 DB 스키마 (Supabase / PostgreSQL)
+-- 도쿄 메트로 가이드 전역 DB 스키마 (Supabase / PostgreSQL)
 -- Country -> City -> Line -> Station 구조
 -- ==========================================
 
@@ -16,8 +16,8 @@ CREATE TABLE public.countries (
 CREATE TABLE public.cities (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     country_id UUID REFERENCES public.countries(id) ON DELETE CASCADE,
-    slug VARCHAR(50) NOT NULL UNIQUE, -- 예: 'osaka'
-    name_ko VARCHAR(100) NOT NULL,    -- 예: '오사카'
+    slug VARCHAR(50) NOT NULL UNIQUE, -- 예: 'tokyo'
+    name_ko VARCHAR(100) NOT NULL,    -- 예: '도쿄'
     name_en VARCHAR(100) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -37,7 +37,7 @@ CREATE TABLE public.stations (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     city_id UUID REFERENCES public.cities(id) ON DELETE CASCADE,
     slug VARCHAR(50) NOT NULL UNIQUE, -- 예: 'namba'
-    name_ko VARCHAR(100) NOT NULL,    -- 예: '난바역'
+    name_ko VARCHAR(100) NOT NULL,    -- 예: '신주쿠역'
     name_en VARCHAR(100) NOT NULL,
     name_jp VARCHAR(100),             -- 예: 'なんば駅'
     latitude DECIMAL(10, 8),          -- 구글맵 연동용
@@ -61,7 +61,7 @@ CREATE TABLE public.hotels (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     station_id UUID REFERENCES public.stations(id) ON DELETE SET NULL, -- 가장 가까운 역
     agoda_id VARCHAR(50) UNIQUE,      -- 아고다 연동용 ID
-    slug VARCHAR(100) NOT NULL UNIQUE,-- 예: 'swissotel-nankai-osaka'
+    slug VARCHAR(100) NOT NULL UNIQUE,-- 예: 'keio-plaza-hotel-tokyo'
     name_ko VARCHAR(255) NOT NULL,
     name_en VARCHAR(255) NOT NULL,
     star_rating DECIMAL(2,1),         -- 성급

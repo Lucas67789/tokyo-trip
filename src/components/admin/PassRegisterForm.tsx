@@ -86,7 +86,7 @@ export default function PassRegisterForm({ stations, lines }: PassRegisterFormPr
             name="name_ko" 
             value={nameKo}
             onChange={(e) => setNameKo(e.target.value)}
-            placeholder="예: 라피트 특급 열차"
+            placeholder="예: 스카이라이너 특급 열차"
             className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder-slate-400 font-bold" 
             required 
           />
@@ -115,7 +115,7 @@ export default function PassRegisterForm({ stations, lines }: PassRegisterFormPr
           <input 
             type="text" 
             name="description" 
-            placeholder="예: 간사이 공항에서 난바역까지 34분만에 도착하는 가장 빠른 방법!"
+            placeholder="예: 나리타 공항에서 신주쿠역까지 34분만에 도착하는 가장 빠른 방법!"
             className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder-slate-400 font-bold" 
             required 
           />
@@ -241,7 +241,7 @@ export default function PassRegisterForm({ stations, lines }: PassRegisterFormPr
 
         <div className="md:col-span-2 mt-4">
           <label className="block text-sm font-bold text-slate-700 mb-1.5 ml-1">{"상세 페이지 포스팅 (SEO 노출용 제목)"}</label>
-          <input type="text" name="post_title" placeholder="예: 라피트 특급 열차 완벽 가이드" className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder-slate-400 font-bold text-blue-700" required />
+          <input type="text" name="post_title" placeholder="예: 스카이라이너 특급 열차 완벽 가이드" className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder-slate-400 font-bold text-blue-700" required />
         </div>
       </div>
 

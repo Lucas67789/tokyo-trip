@@ -464,7 +464,7 @@ export default async function CouponsAdminPage() {
                   className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none placeholder-slate-300 font-medium"
                 />
                 <p className="text-[11px] text-slate-400 mt-1.5">
-                  비워두면 자동생성: &quot;[스토어명] [할인율] 할인 [N]월 | 오사카트립&quot;
+                  비워두면 자동생성: &quot;[스토어명] [할인율] 할인 [N]월 | 도쿄트립&quot;
                 </p>
               </div>
 

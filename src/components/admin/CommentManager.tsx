@@ -167,7 +167,7 @@ export default function CommentManager({ comments, targetList }: { comments: Com
               <textarea 
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                placeholder="예: 이번에 아기랑 오사카 가는데 라피트 덕분에 역까지 편하게 갔어요! 꿀팁 감사합니다 ㅎㅎ"
+                placeholder="예: 이번에 아기랑 도쿄 가는데 스카이라이너 덕분에 역까지 편하게 갔어요! 꿀팁 감사합니다 ㅎㅎ"
                 className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500 text-sm min-h-[100px] resize-y"
                 required
               />
