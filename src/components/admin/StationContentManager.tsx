@@ -482,7 +482,7 @@ export default function StationContentManager({ stations, attractions, siteSetti
                   type="text" 
                   value={panelTitle} 
                   onChange={e => setPanelTitle(e.target.value)}
-                  placeholder="예: 클룩 유니버셜 스튜디오 입장권 (비워두면 'OO역 주변 명소'로 표시)"
+                  placeholder="예: 클룩 디즈니랜드 스튜디오 입장권 (비워두면 'OO역 주변 명소'로 표시)"
                   className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition-all font-bold text-emerald-700"
                 />
               </div>

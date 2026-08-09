@@ -11,7 +11,7 @@ async function main() {
   const { data: station, error: fetchErr } = await supabase
     .from('stations')
     .select('id')
-    .eq('slug', 'universal-city')
+    .eq('slug', 'disney-resort')
     .single();
 
   if (fetchErr || !station) {
@@ -23,13 +23,13 @@ async function main() {
     .from('site_settings')
     .upsert({ 
       key: `station_panel_title_${station.id}`, 
-      value: '클룩 유니버셜 스튜디오 입장권' 
+      value: '클룩 디즈니랜드 스튜디오 입장권' 
     }, { onConflict: 'key' });
 
   if (upsertErr) {
     console.error("Failed to upsert setting:", upsertErr);
   } else {
-    console.log("Successfully set panel title for universal-city to 클룩 유니버셜 스튜디오 입장권!");
+    console.log("Successfully set panel title for disney-resort to 클룩 디즈니랜드 스튜디오 입장권!");
   }
 }
 

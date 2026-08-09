@@ -10,7 +10,7 @@ ALTER TABLE public.stations ADD COLUMN IF NOT EXISTS express_pass_link TEXT;
 CREATE TABLE IF NOT EXISTS public.station_attractions (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     station_id UUID REFERENCES public.stations(id) ON DELETE CASCADE,
-    name VARCHAR(255) NOT NULL,            -- 예: '시부야 스크램블 교차로', '유니버설 스튜디오 재팬'
+    name VARCHAR(255) NOT NULL,            -- 예: '시부야 스크램블 교차로', '디즈니랜드 스튜디오 재팬'
     category VARCHAR(100),                 -- 예: '관광지', '쇼핑', '맛집'
     icon VARCHAR(100),                     -- lucide-react 아이콘 이름 예: 'Camera', 'ShoppingBag'
     description TEXT,                      -- 1줄 요약 설명

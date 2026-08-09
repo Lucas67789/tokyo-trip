@@ -36,10 +36,10 @@ CREATE TABLE public.lines (
 CREATE TABLE public.stations (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     city_id UUID REFERENCES public.cities(id) ON DELETE CASCADE,
-    slug VARCHAR(50) NOT NULL UNIQUE, -- 예: 'namba'
+    slug VARCHAR(50) NOT NULL UNIQUE, -- 예: 'shinjuku'
     name_ko VARCHAR(100) NOT NULL,    -- 예: '신주쿠역'
     name_en VARCHAR(100) NOT NULL,
-    name_jp VARCHAR(100),             -- 예: 'なんば駅'
+    name_jp VARCHAR(100),             -- 예: '新宿駅'
     latitude DECIMAL(10, 8),          -- 구글맵 연동용
     longitude DECIMAL(11, 8),         -- 구글맵 연동용
     description TEXT,                 -- AI/CMS로 생성될 역 소개 (SEO용)

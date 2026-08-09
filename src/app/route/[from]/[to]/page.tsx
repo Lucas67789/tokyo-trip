@@ -289,7 +289,7 @@ export default async function RoutePage({
         className="w-full max-w-6xl px-4 pt-10"
         aria-label={`${fromStation.name_ko}→${toStation.name_ko} 경로 안내`}
       >
-        {((from === "shinjuku" && to === "kix") || (from === "kix" && to === "shinjuku")) && (
+        {((from === "shinjuku" && to === "nrt") || (from === "nrt" && to === "shinjuku")) && (
           <div className="mb-8 p-6 bg-red-50 border-2 border-red-200 rounded-2xl shadow-sm text-center max-w-4xl mx-auto">
             <p className="text-red-700 font-extrabold text-lg md:text-xl flex flex-col md:flex-row items-center justify-center gap-2">
               <span>🚨</span> 신주쿠역? 난카이 신주쿠역? 스카이라이너는 무조건 난카이 신주쿠역에서 탑승입니다!
