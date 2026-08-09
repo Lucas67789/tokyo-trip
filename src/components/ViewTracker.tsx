@@ -17,6 +17,7 @@ export default function ViewTracker({ targetId, actionType }: ViewTrackerProps) 
           headers: {
             "Content-Type": "application/json",
           },
+      credentials: "include",
           body: JSON.stringify({
             action_type: actionType,
             target_id: targetId,

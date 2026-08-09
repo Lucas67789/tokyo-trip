@@ -84,6 +84,7 @@ export default function MainPromoCodeCard({ promo, redirectUrl, detailUrl }: { p
     fetch('/api/track', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ action_type: "CLICK_PROMO", target_id: promo.id }),
       keepalive: true,
     }).catch(() => {});
@@ -112,6 +113,7 @@ export default function MainPromoCodeCard({ promo, redirectUrl, detailUrl }: { p
       fetch('/api/track', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+      credentials: "include",
         body: JSON.stringify({ action_type: "CLICK_PROMO", target_id: promo.id }),
       }).catch(() => {});
     };

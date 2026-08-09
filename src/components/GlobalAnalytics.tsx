@@ -26,6 +26,7 @@ export default function GlobalAnalytics() {
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: "include",
       body: JSON.stringify({
         action_type,
       }),

@@ -13,6 +13,7 @@ export default function TrackClick({ actionType, targetId, children, onClick, ..
     fetch("/api/track", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ action_type: actionType, target_id: targetId }),
       keepalive: true,
     }).catch(err => console.error("TrackClick error:", err));

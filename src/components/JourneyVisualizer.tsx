@@ -293,6 +293,7 @@ export default function JourneyVisualizer({ initialFrom = "", initialTo = "", st
         fetch('/api/track/search', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+      credentials: "include",
           body: JSON.stringify({ start_slug: departure, end_slug: destination }),
         }).catch(console.error);
       }
@@ -345,6 +346,7 @@ export default function JourneyVisualizer({ initialFrom = "", initialTo = "", st
                     fetch('/api/track', {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
+      credentials: "include",
                       body: JSON.stringify({ action_type: 'DOWNLOAD_PDF' })
                     }).catch(console.error);
                   }}
@@ -733,6 +735,7 @@ export default function JourneyVisualizer({ initialFrom = "", initialTo = "", st
                         fetch('/api/track', {
                           method: 'POST',
                           headers: { 'Content-Type': 'application/json' },
+      credentials: "include",
                           body: JSON.stringify({ action_type: 'CLICK_GOOGLE_MAPS' }),
                           keepalive: true
                         }).catch(console.error);
@@ -746,6 +749,7 @@ export default function JourneyVisualizer({ initialFrom = "", initialTo = "", st
                         fetch('/api/track', {
                           method: 'POST',
                           headers: { 'Content-Type': 'application/json' },
+      credentials: "include",
                           body: JSON.stringify({ action_type: 'CLICK_STATION_HOTEL', target_id: destinationStationData?.id || null }),
                           keepalive: true
                         }).catch(console.error);
@@ -775,6 +779,7 @@ export default function JourneyVisualizer({ initialFrom = "", initialTo = "", st
                           fetch('/api/track', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
+      credentials: "include",
                             body: JSON.stringify({ action_type: 'CLICK_SUGGESTED_PASS', target_id: pass.id }),
                             keepalive: true
                           }).catch(console.error);
