@@ -334,29 +334,7 @@ export default function JourneyVisualizer({ initialFrom = "", initialTo = "", st
       <div className="relative">
         <div className="flex flex-col gap-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="space-y-3">
-              <div className="flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-4 hidden">
-                {/* Title is moved to page.tsx, hidden here to avoid duplication */}
-                <h2 className="text-3xl font-black text-white tracking-tight">도쿄 지하철 노선도 검색</h2>
-                <a 
-                  href="/tokyo-metro-subway-route-map-ko.pdf" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  onClick={() => {
-                    fetch('/api/track', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-      credentials: "include",
-                      body: JSON.stringify({ action_type: 'DOWNLOAD_PDF' })
-                    }).catch(console.error);
-                  }}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-xl text-sm font-extrabold hover:bg-cyan-500/20 transition-all shadow-[0_0_15px_rgba(0,240,255,0.2)] active:scale-95"
-                >
-                  <MapIcon size={18} />
-                  도쿄 메트로 한글 노선도 다운로드
-                </a>
-              </div>
-            </div>
+
             <div className="flex flex-col gap-2.5 w-full relative mt-2 md:mt-0">
               <div className="flex items-center justify-between px-1">
                 <span className="text-xs font-extrabold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded-md border border-cyan-500/20 flex items-center gap-1 shadow-[0_0_10px_rgba(0,240,255,0.1)]">

@@ -2,7 +2,7 @@
 import PassCard from "@/components/PassCard";
 import HotelCard from "@/components/HotelCard";
 import JourneyVisualizer from "@/components/JourneyVisualizer";
-import { Compass, TrendingUp, Star, Ticket, Lightbulb } from "lucide-react";
+import { Compass, TrendingUp, Star, Ticket, Lightbulb, Download } from "lucide-react";
 import { createPublicClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 import MainPromoCodeCard from "@/components/MainPromoCodeCard";
@@ -11,6 +11,7 @@ import Image from "next/image";
 import { Suspense } from "react";
 import WeatherWidget from "@/components/WeatherWidget";
 import ExchangeRateWidget from "@/components/ExchangeRateWidget";
+import TrackClick from "@/components/TrackClick";
 
 export const revalidate = 2592000; // 30일 캐시 (무료 티어 ISR Writes 절약)
 
@@ -322,13 +323,25 @@ export default async function Home() {
           <section className="md:col-span-8 lg:col-span-9 bg-[#1A2235]/40 backdrop-blur-2xl border border-white/5 rounded-[2rem] p-6 md:p-10 shadow-[0_0_30px_rgba(0,0,0,0.5)] relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
             
-            <div className="mb-8">
-              <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
-                도쿄 지하철 <span className="text-cyan-400">노선도</span>
-              </h1>
-              <p className="text-lg text-white/60 font-medium mt-3">
-                출발지와 도착지를 선택하면 도쿄의 복잡한 지하철망을 가장 직관적으로 안내합니다.
-              </p>
+            <div className="mb-8 flex flex-col md:flex-row md:items-start justify-between gap-4">
+              <div>
+                <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+                  도쿄 지하철 <span className="text-cyan-400">노선도</span>
+                </h1>
+                <p className="text-lg text-white/60 font-medium mt-3">
+                  출발지와 도착지를 선택하면 도쿄의 복잡한 지하철망을 가장 직관적으로 안내합니다.
+                </p>
+              </div>
+              <TrackClick 
+                href="/tokyo-subway-map-ko.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                actionType="DOWNLOAD_PDF"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-xl text-sm font-extrabold hover:bg-cyan-500/20 transition-all shadow-[0_0_15px_rgba(0,240,255,0.2)] active:scale-95 shrink-0"
+              >
+                <Download size={18} />
+                한글 노선도 다운로드
+              </TrackClick>
             </div>
             
             <Suspense fallback={<div className="h-96 flex items-center justify-center animate-pulse"><div className="w-10 h-10 border-4 border-cyan-500/30 border-t-cyan-400 rounded-full animate-spin"></div></div>}>
