@@ -235,7 +235,7 @@ export default async function HotelPage({ params }: { params: Promise<{ slug: st
             <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-2">
               <Star className="text-purple-400" size={20} /> 상세 리뷰 및 시설 정보
             </h2>
-            <div className="bg-[#1A2235]/40 backdrop-blur-2xl p-8 rounded-[2rem] border border-white/5 shadow-lg prose prose-invert prose-cyan max-w-none">
+            <div className="w-full bg-[#1A2235]/40 backdrop-blur-2xl p-8 rounded-[2rem] border border-white/5 shadow-lg prose prose-invert prose-cyan max-w-none">
               {hotel.content ? (
                 <ImageLightbox>
                   <div dangerouslySetInnerHTML={{ __html: hotel.content }} />

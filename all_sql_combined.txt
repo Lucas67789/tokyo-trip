@@ -1,0 +1,817 @@
+﻿-- ==========================================
+-- ?꾩퓙 硫뷀듃濡?媛?대뱶 ?꾩뿭 DB ?ㅽ궎留?(Supabase / PostgreSQL)
+-- Country -> City -> Line -> Station 援ъ“
+-- ==========================================
+
+-- 1. 援?? (Country)
+CREATE TABLE public.countries (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    code VARCHAR(2) NOT NULL UNIQUE, -- ?? 'JP'
+    name_ko VARCHAR(100) NOT NULL,   -- ?? '?쇰낯'
+    name_en VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 2. ?꾩떆 (City)
+CREATE TABLE public.cities (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    country_id UUID REFERENCES public.countries(id) ON DELETE CASCADE,
+    slug VARCHAR(50) NOT NULL UNIQUE, -- ?? 'tokyo'
+    name_ko VARCHAR(100) NOT NULL,    -- ?? '?꾩퓙'
+    name_en VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 3. ?몄꽑 (Line)
+CREATE TABLE public.lines (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    city_id UUID REFERENCES public.cities(id) ON DELETE CASCADE,
+    slug VARCHAR(50) NOT NULL UNIQUE, -- ?? 'midosuji'
+    name_ko VARCHAR(100) NOT NULL,    -- ?? '誘몃룄?ㅼ???
+    color_hex VARCHAR(7) NOT NULL,    -- ?? '#E51720'
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 4. 吏?섏쿋??(Station)
+CREATE TABLE public.stations (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    city_id UUID REFERENCES public.cities(id) ON DELETE CASCADE,
+    slug VARCHAR(50) NOT NULL UNIQUE, -- ?? 'shinjuku'
+    name_ko VARCHAR(100) NOT NULL,    -- ?? '?좎＜荑좎뿭'
+    name_en VARCHAR(100) NOT NULL,
+    name_jp VARCHAR(100),             -- ?? '?겼?蓼?
+    latitude DECIMAL(10, 8),          -- 援ш?留??곕룞??    longitude DECIMAL(11, 8),         -- 援ш?留??곕룞??    description TEXT,                 -- AI/CMS濡??앹꽦?????뚭컻 (SEO??
+    meta_title VARCHAR(255),
+    meta_description VARCHAR(500),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- ??낵 ?몄꽑??N:M 留ㅽ븨 ?뚯씠釉?(?섏듅??吏??
+CREATE TABLE public.station_lines (
+    station_id UUID REFERENCES public.stations(id) ON DELETE CASCADE,
+    line_id UUID REFERENCES public.lines(id) ON DELETE CASCADE,
+    station_order INTEGER, -- ?몄꽑 ?????쒖꽌
+    PRIMARY KEY (station_id, line_id)
+);
+
+-- 5. ?명뀛 (Hotel)
+CREATE TABLE public.hotels (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    station_id UUID REFERENCES public.stations(id) ON DELETE SET NULL, -- 媛??媛源뚯슫 ??    agoda_id VARCHAR(50) UNIQUE,      -- ?꾧퀬???곕룞??ID
+    slug VARCHAR(100) NOT NULL UNIQUE,-- ?? 'keio-plaza-hotel-tokyo'
+    name_ko VARCHAR(255) NOT NULL,
+    name_en VARCHAR(255) NOT NULL,
+    star_rating DECIMAL(2,1),         -- ?깃툒
+    review_score DECIMAL(3,1),        -- ?됱젏
+    review_count INTEGER,             -- 由щ럭 ??    lowest_price INTEGER,             -- ?ㅼ떆媛?理쒖?媛 ??μ슜
+    agoda_link TEXT,                  -- ?댄븘由ъ뿉?댄듃 ?먮낯 留곹겕
+    thumbnail_url TEXT,               -- CDN ?곕룞???몃꽕???대?吏
+    address TEXT,                     -- ?ㅼ젣 二쇱냼
+    latitude DECIMAL(10, 8),
+    longitude DECIMAL(11, 8),
+    content TEXT,                     -- 釉붾줉 ?먮뵒??留덊겕?ㅼ슫 ?댁슜 (?ㅼ씠踰?View??
+    meta_title VARCHAR(255),
+    meta_description VARCHAR(500),
+    tags TEXT[],                      -- UI???뱀옣???쒓렇 (?? ['??뺤옣', '??꽭沅?])
+    view_count INTEGER DEFAULT 0,     -- FOMO UI??("理쒓렐 24?쒓컙 ??議고쉶?? ?깆뿉 ?쒖슜)
+    distance_meters INTEGER,          -- ??낵??嫄곕━(誘명꽣)
+    discount_rate INTEGER,            -- ?좎씤??%)
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 6. ?ъ슜???곗씠??(User Generated Data) - ?뺤옣??怨좊젮
+-- ?섏쨷??濡쒓렇??湲곕뒫??異붽??섍굅??鍮꾪쉶???앸퀎(荑좏궎 UUID)???꾪빐
+CREATE TABLE public.user_activities (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    session_id UUID NOT NULL,         -- 荑좏궎/濡쒖뺄 ?ㅽ넗由ъ?????λ맂 ?좎? 怨좎쑀 ID
+    action_type VARCHAR(50),          -- 'VIEW_STATION', 'VIEW_HOTEL', 'CLICK_AGODA' ??    target_id UUID,                   -- ??ID ?먮뒗 ?명뀛 ID
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- ?몃뜳???앹꽦 (SEO, 寃???깅뒫 ?μ긽??
+CREATE INDEX idx_stations_slug ON public.stations(slug);
+CREATE INDEX idx_hotels_slug ON public.hotels(slug);
+CREATE INDEX idx_hotels_station ON public.hotels(station_id);
+CREATE INDEX idx_user_activities_session ON public.user_activities(session_id);
+
+-- 7. ?쒗쑕???좎씤肄붾뱶 (Promo Codes)
+CREATE TABLE public.promo_codes (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    partner_name VARCHAR(100) NOT NULL,   -- ?? '?꾧퀬??, '?명뀛?ㅻ떣而?, '?대）'
+    promo_code VARCHAR(100) NOT NULL,     -- ?? 'AGODA8', 'HOTELS5'
+    discount_rate VARCHAR(100) NOT NULL,  -- ?? '8% ?좎씤', '5% 異붽? ?좎씤'
+    target_url TEXT NOT NULL,             -- ?대┃ ???곌껐???쒗쑕 ?댄븘由ъ뿉?댄듃 URL
+    description TEXT,                     -- ?곸슜 議곌굔 (?? '10留뚯썝 ?댁긽 寃곗젣 ??, '?꾩꽭怨??명뀛 ???)
+    image_url TEXT,                       -- ?몃꽕???대?吏 URL (?ㅼ씠踰?SEO 由ъ튂 ?ㅻ땲??諛?UI ?몄텧??
+    is_active BOOLEAN DEFAULT TRUE,       -- ?몄텧 ?쒖꽦???щ?
+    click_count INTEGER DEFAULT 0,        -- ?좎씤肄붾뱶 ?대┃??    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- RLS ?ㅼ젙
+ALTER TABLE public.promo_codes ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public read to promo_codes" 
+ON public.promo_codes FOR SELECT 
+USING (true);
+
+CREATE POLICY "Allow admin all access to promo_codes" 
+ON public.promo_codes FOR ALL 
+TO authenticated 
+USING (true) 
+WITH CHECK (true);
+
+-- 8. ?ъ씠???ㅼ젙 (Site Settings)
+CREATE TABLE IF NOT EXISTS public.site_settings (
+    key VARCHAR(100) PRIMARY KEY,
+    value TEXT NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 珥덇린 ?꾨줈紐⑥뀡 ???ㅼ젙 ?쎌엯 (湲곕낯媛? '5??)
+INSERT INTO public.site_settings (key, value) 
+VALUES ('active_promo_month', '5??)
+ON CONFLICT (key) DO NOTHING;
+
+-- RLS ?뺤콉 ?ㅼ젙 (?꾧뎄??議고쉶 媛?? ?몄쬆??愿由ъ옄留??몄쭛 媛??
+ALTER TABLE public.site_settings ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public read to site_settings" 
+ON public.site_settings FOR SELECT 
+USING (true);
+
+CREATE POLICY "Allow admin all access to site_settings" 
+ON public.site_settings FOR ALL 
+TO authenticated 
+USING (true) 
+WITH CHECK (true);
+
+
+
+-- ==========================================
+-- Supabase Row-Level Security (RLS) ?듯빀 ?곸슜 ?ㅽ겕由쏀듃
+-- 紐⑤뱺 ?뚯씠釉붿뿉 ???RLS瑜??쒖꽦?뷀븯怨??덉쟾???뺤콉???ㅼ젙?⑸땲??
+-- ==========================================
+
+-- 1. 紐⑤뱺 二쇱슂 ?뚯씠釉붿뿉 RLS ?쒖꽦??ALTER TABLE public.countries ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.cities ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.lines ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.stations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.station_lines ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.hotels ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.passes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.pass_targets ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.station_attractions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.posts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.menus ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.comments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_activities ENABLE ROW LEVEL SECURITY;
+
+-- (湲곗〈???ㅼ젙???뚯씠釉붾뱾??紐낆떆?곸쑝濡??쒖꽦??
+ALTER TABLE public.promo_codes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.site_settings ENABLE ROW LEVEL SECURITY;
+
+-- 2. "?쎄린 ?꾩슜" ?깃꺽???뚯씠釉붾뱾 ?뺤콉
+-- (?쇰컲 ?좎???議고쉶(SELECT)留?媛?? ?곗씠??異붽?/?섏젙/??젣???몄쬆??愿由ъ옄留?媛??
+
+-- countries
+DROP POLICY IF EXISTS "Allow public read countries" ON public.countries;
+DROP POLICY IF EXISTS "Allow admin all countries" ON public.countries;
+CREATE POLICY "Allow public read countries" ON public.countries FOR SELECT USING (true);
+CREATE POLICY "Allow admin all countries" ON public.countries FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- cities
+DROP POLICY IF EXISTS "Allow public read cities" ON public.cities;
+DROP POLICY IF EXISTS "Allow admin all cities" ON public.cities;
+CREATE POLICY "Allow public read cities" ON public.cities FOR SELECT USING (true);
+CREATE POLICY "Allow admin all cities" ON public.cities FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- lines
+DROP POLICY IF EXISTS "Allow public read lines" ON public.lines;
+DROP POLICY IF EXISTS "Allow admin all lines" ON public.lines;
+CREATE POLICY "Allow public read lines" ON public.lines FOR SELECT USING (true);
+CREATE POLICY "Allow admin all lines" ON public.lines FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- stations
+DROP POLICY IF EXISTS "Allow public read stations" ON public.stations;
+DROP POLICY IF EXISTS "Allow admin all stations" ON public.stations;
+CREATE POLICY "Allow public read stations" ON public.stations FOR SELECT USING (true);
+CREATE POLICY "Allow admin all stations" ON public.stations FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- station_lines
+DROP POLICY IF EXISTS "Allow public read station_lines" ON public.station_lines;
+DROP POLICY IF EXISTS "Allow admin all station_lines" ON public.station_lines;
+CREATE POLICY "Allow public read station_lines" ON public.station_lines FOR SELECT USING (true);
+CREATE POLICY "Allow admin all station_lines" ON public.station_lines FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- hotels
+DROP POLICY IF EXISTS "Allow public read hotels" ON public.hotels;
+DROP POLICY IF EXISTS "Allow admin all hotels" ON public.hotels;
+CREATE POLICY "Allow public read hotels" ON public.hotels FOR SELECT USING (true);
+CREATE POLICY "Allow admin all hotels" ON public.hotels FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- passes
+DROP POLICY IF EXISTS "Allow public read passes" ON public.passes;
+DROP POLICY IF EXISTS "Allow admin all passes" ON public.passes;
+CREATE POLICY "Allow public read passes" ON public.passes FOR SELECT USING (true);
+CREATE POLICY "Allow admin all passes" ON public.passes FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- pass_targets
+DROP POLICY IF EXISTS "Allow public read pass_targets" ON public.pass_targets;
+DROP POLICY IF EXISTS "Allow admin all pass_targets" ON public.pass_targets;
+CREATE POLICY "Allow public read pass_targets" ON public.pass_targets FOR SELECT USING (true);
+CREATE POLICY "Allow admin all pass_targets" ON public.pass_targets FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- station_attractions
+DROP POLICY IF EXISTS "Allow public read station_attractions" ON public.station_attractions;
+DROP POLICY IF EXISTS "Allow admin all station_attractions" ON public.station_attractions;
+CREATE POLICY "Allow public read station_attractions" ON public.station_attractions FOR SELECT USING (true);
+CREATE POLICY "Allow admin all station_attractions" ON public.station_attractions FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- posts
+DROP POLICY IF EXISTS "Allow public read posts" ON public.posts;
+DROP POLICY IF EXISTS "Allow admin all posts" ON public.posts;
+CREATE POLICY "Allow public read posts" ON public.posts FOR SELECT USING (true);
+CREATE POLICY "Allow admin all posts" ON public.posts FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- menus
+DROP POLICY IF EXISTS "Allow public read menus" ON public.menus;
+DROP POLICY IF EXISTS "Allow admin all menus" ON public.menus;
+CREATE POLICY "Allow public read menus" ON public.menus FOR SELECT USING (true);
+CREATE POLICY "Allow admin all menus" ON public.menus FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+
+-- 3. ?좎?媛 ?곗씠?곕? ?앹꽦(異붽?)?????덈뒗 ?뚯씠釉??뺤콉
+
+-- comments: ?꾧뎄??議고쉶 諛??묒꽦(INSERT) 媛?? ?섏젙/??젣???몄쬆??愿由ъ옄留?媛??DROP POLICY IF EXISTS "Allow public read comments" ON public.comments;
+DROP POLICY IF EXISTS "Allow public insert comments" ON public.comments;
+DROP POLICY IF EXISTS "Allow admin all comments" ON public.comments;
+CREATE POLICY "Allow public read comments" ON public.comments FOR SELECT USING (true);
+CREATE POLICY "Allow public insert comments" ON public.comments FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow admin all comments" ON public.comments FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- user_activities: ?쒕룞 濡쒓렇?? ?꾧뎄??議고쉶 諛??묒꽦 媛??DROP POLICY IF EXISTS "Allow public read user_activities" ON public.user_activities;
+DROP POLICY IF EXISTS "Allow public insert user_activities" ON public.user_activities;
+DROP POLICY IF EXISTS "Allow admin all user_activities" ON public.user_activities;
+CREATE POLICY "Allow public read user_activities" ON public.user_activities FOR SELECT USING (true);
+CREATE POLICY "Allow public insert user_activities" ON public.user_activities FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow admin all user_activities" ON public.user_activities FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- ??
+-- 0. Schema Updates (in case schema.sql was already executed before tags column was added)
+ALTER TABLE public.hotels ADD COLUMN IF NOT EXISTS tags TEXT[];
+ALTER TABLE public.hotels ADD COLUMN IF NOT EXISTS distance_meters INTEGER;
+ALTER TABLE public.hotels ADD COLUMN IF NOT EXISTS discount_rate INTEGER;
+
+-- 1. Country & City
+INSERT INTO public.countries (id, code, name_ko, name_en) 
+VALUES ('c0000000-0000-0000-0000-000000000001', 'JP', '?쇰낯', 'Japan')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO public.cities (id, country_id, slug, name_ko, name_en)
+VALUES ('c1000000-0000-0000-0000-000000000002', 'c0000000-0000-0000-0000-000000000001', 'tokyo', '?꾩퓙', 'Tokyo')
+ON CONFLICT (slug) DO NOTHING;
+
+-- 2. Lines
+INSERT INTO public.lines (id, city_id, slug, name_ko, color_hex) VALUES
+('b0000000-0000-0000-0000-000000000010', 'c1000000-0000-0000-0000-000000000002', 'ginza', '湲댁옄??, '#FF9500'),
+('b0000000-0000-0000-0000-000000000011', 'c1000000-0000-0000-0000-000000000002', 'marunouchi', '留덈（?몄슦移섏꽑', '#F62E36'),
+('b0000000-0000-0000-0000-000000000012', 'c1000000-0000-0000-0000-000000000002', 'jr_yamanote', 'JR ?쇰쭏?명뀒??, '#80C241')
+ON CONFLICT (slug) DO NOTHING;
+
+-- 3. Stations
+INSERT INTO public.stations (id, city_id, slug, name_ko, name_en, name_jp, description) VALUES
+('a0000000-0000-0000-0000-000000000010', 'c1000000-0000-0000-0000-000000000002', 'shinjuku', '?좎＜荑좎뿭', 'Shinjuku', '?겼?', '?멸퀎 1???댁슜媛앹쓣 ?먮옉?섎뒗 ?꾩퓙 理쒕???援먰넻 ?덈툕. 媛遺?ㅼ큹, 諛깊솕?? ?꾩퓙?꾩껌 ??愿愿??명봽?쇨? 諛吏묓빐 ?덉뒿?덈떎.'),
+('a0000000-0000-0000-0000-000000000011', 'c1000000-0000-0000-0000-000000000002', 'shibuya', '?쒕??쇱뿭', 'Shibuya', '歷뗨갬', '?딆쓬怨??좏뻾??嫄곕━. ?쒕????ㅽ겕?⑤툝 援먯감濡쒖? 異⑷껄 ?섏튂肄??숈긽???좊챸?섎ŉ ?섎━? ?듭뒪?꾨젅?ㅺ? ?뺤감?⑸땲??'),
+('a0000000-0000-0000-0000-000000000012', 'c1000000-0000-0000-0000-000000000002', 'ginza', '湲댁옄??, 'Ginza', '?佯?, '?쇰낯 理쒓퀬湲?紐낇뭹 嫄곕━?댁옄 ?쇳븨???깆?. 二쇰쭚?먮뒗 蹂댄뻾??泥쒓뎅?쇰줈 蹂?좏빀?덈떎.')
+ON CONFLICT (slug) DO NOTHING;
+
+-- Station Lines Mapping
+INSERT INTO public.station_lines (station_id, line_id, station_order) VALUES
+('a0000000-0000-0000-0000-000000000010', 'b0000000-0000-0000-0000-000000000011', 10), -- Shinjuku Marunouchi
+('a0000000-0000-0000-0000-000000000010', 'b0000000-0000-0000-0000-000000000012', 10), -- Shinjuku Yamanote
+('a0000000-0000-0000-0000-000000000011', 'b0000000-0000-0000-0000-000000000010', 1),  -- Shibuya Ginza
+('a0000000-0000-0000-0000-000000000011', 'b0000000-0000-0000-0000-000000000012', 15), -- Shibuya Yamanote
+('a0000000-0000-0000-0000-000000000012', 'b0000000-0000-0000-0000-000000000010', 10), -- Ginza Ginza
+('a0000000-0000-0000-0000-000000000012', 'b0000000-0000-0000-0000-000000000011', 8)   -- Ginza Marunouchi
+ON CONFLICT (station_id, line_id) DO NOTHING;
+
+-- 4. Hotels
+INSERT INTO public.hotels (id, station_id, slug, name_ko, name_en, star_rating, review_score, review_count, lowest_price, thumbnail_url, tags, view_count, distance_meters, discount_rate) VALUES
+('f0000000-0000-0000-0000-000000000010', 'a0000000-0000-0000-0000-000000000010', 'shinjuku-washington-hotel', '?좎＜荑??뚯떛???명뀛', 'Shinjuku Washington Hotel', 3.5, 8.2, 8540, 125000, 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80', ARRAY['怨듯빆踰꾩뒪', '媛?깅퉬', '鍮꾩쫰?덉뒪'], 412, 500, 25),
+('f0000000-0000-0000-0000-000000000011', 'a0000000-0000-0000-0000-000000000011', 'shibuya-excel-hotel-tokyu', '?쒕????묒? ?명뀛 ?꾪걧', 'Shibuya Excel Hotel Tokyu', 4.0, 8.8, 4215, 250000, 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80', ARRAY['??쭅寃?, '?쇳븨?묎렐??, '?ㅽ겕?⑤툝酉?], 512, 10, 42)
+ON CONFLICT (slug) DO UPDATE SET 
+  distance_meters = EXCLUDED.distance_meters,
+  discount_rate = EXCLUDED.discount_rate;
+
+-- ==========================================
+-- ?꾩퓙 硫뷀듃濡?媛?대뱶 ?꾩뿭 DB ?ㅽ궎留?(Supabase / PostgreSQL)
+-- Country -> City -> Line -> Station 援ъ“
+-- ==========================================
+
+-- 1. 援?? (Country)
+CREATE TABLE public.countries (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    code VARCHAR(2) NOT NULL UNIQUE, -- ?? 'JP'
+    name_ko VARCHAR(100) NOT NULL,   -- ?? '?쇰낯'
+    name_en VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 2. ?꾩떆 (City)
+CREATE TABLE public.cities (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    country_id UUID REFERENCES public.countries(id) ON DELETE CASCADE,
+    slug VARCHAR(50) NOT NULL UNIQUE, -- ?? 'tokyo'
+    name_ko VARCHAR(100) NOT NULL,    -- ?? '?꾩퓙'
+    name_en VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 3. ?몄꽑 (Line)
+CREATE TABLE public.lines (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    city_id UUID REFERENCES public.cities(id) ON DELETE CASCADE,
+    slug VARCHAR(50) NOT NULL UNIQUE, -- ?? 'midosuji'
+    name_ko VARCHAR(100) NOT NULL,    -- ?? '誘몃룄?ㅼ???
+    color_hex VARCHAR(7) NOT NULL,    -- ?? '#E51720'
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 4. 吏?섏쿋??(Station)
+CREATE TABLE public.stations (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    city_id UUID REFERENCES public.cities(id) ON DELETE CASCADE,
+    slug VARCHAR(50) NOT NULL UNIQUE, -- ?? 'shinjuku'
+    name_ko VARCHAR(100) NOT NULL,    -- ?? '?좎＜荑좎뿭'
+    name_en VARCHAR(100) NOT NULL,
+    name_jp VARCHAR(100),             -- ?? '?겼?蓼?
+    latitude DECIMAL(10, 8),          -- 援ш?留??곕룞??    longitude DECIMAL(11, 8),         -- 援ш?留??곕룞??    description TEXT,                 -- AI/CMS濡??앹꽦?????뚭컻 (SEO??
+    meta_title VARCHAR(255),
+    meta_description VARCHAR(500),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- ??낵 ?몄꽑??N:M 留ㅽ븨 ?뚯씠釉?(?섏듅??吏??
+CREATE TABLE public.station_lines (
+    station_id UUID REFERENCES public.stations(id) ON DELETE CASCADE,
+    line_id UUID REFERENCES public.lines(id) ON DELETE CASCADE,
+    station_order INTEGER, -- ?몄꽑 ?????쒖꽌
+    PRIMARY KEY (station_id, line_id)
+);
+
+-- 5. ?명뀛 (Hotel)
+CREATE TABLE public.hotels (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    station_id UUID REFERENCES public.stations(id) ON DELETE SET NULL, -- 媛??媛源뚯슫 ??    agoda_id VARCHAR(50) UNIQUE,      -- ?꾧퀬???곕룞??ID
+    slug VARCHAR(100) NOT NULL UNIQUE,-- ?? 'keio-plaza-hotel-tokyo'
+    name_ko VARCHAR(255) NOT NULL,
+    name_en VARCHAR(255) NOT NULL,
+    star_rating DECIMAL(2,1),         -- ?깃툒
+    review_score DECIMAL(3,1),        -- ?됱젏
+    review_count INTEGER,             -- 由щ럭 ??    lowest_price INTEGER,             -- ?ㅼ떆媛?理쒖?媛 ??μ슜
+    agoda_link TEXT,                  -- ?댄븘由ъ뿉?댄듃 ?먮낯 留곹겕
+    thumbnail_url TEXT,               -- CDN ?곕룞???몃꽕???대?吏
+    address TEXT,                     -- ?ㅼ젣 二쇱냼
+    latitude DECIMAL(10, 8),
+    longitude DECIMAL(11, 8),
+    content TEXT,                     -- 釉붾줉 ?먮뵒??留덊겕?ㅼ슫 ?댁슜 (?ㅼ씠踰?View??
+    meta_title VARCHAR(255),
+    meta_description VARCHAR(500),
+    tags TEXT[],                      -- UI???뱀옣???쒓렇 (?? ['??뺤옣', '??꽭沅?])
+    view_count INTEGER DEFAULT 0,     -- FOMO UI??("理쒓렐 24?쒓컙 ??議고쉶?? ?깆뿉 ?쒖슜)
+    distance_meters INTEGER,          -- ??낵??嫄곕━(誘명꽣)
+    discount_rate INTEGER,            -- ?좎씤??%)
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 6. ?ъ슜???곗씠??(User Generated Data) - ?뺤옣??怨좊젮
+-- ?섏쨷??濡쒓렇??湲곕뒫??異붽??섍굅??鍮꾪쉶???앸퀎(荑좏궎 UUID)???꾪빐
+CREATE TABLE public.user_activities (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    session_id UUID NOT NULL,         -- 荑좏궎/濡쒖뺄 ?ㅽ넗由ъ?????λ맂 ?좎? 怨좎쑀 ID
+    action_type VARCHAR(50),          -- 'VIEW_STATION', 'VIEW_HOTEL', 'CLICK_AGODA' ??    target_id UUID,                   -- ??ID ?먮뒗 ?명뀛 ID
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- ?몃뜳???앹꽦 (SEO, 寃???깅뒫 ?μ긽??
+CREATE INDEX idx_stations_slug ON public.stations(slug);
+CREATE INDEX idx_hotels_slug ON public.hotels(slug);
+CREATE INDEX idx_hotels_station ON public.hotels(station_id);
+CREATE INDEX idx_user_activities_session ON public.user_activities(session_id);
+
+-- 7. ?쒗쑕???좎씤肄붾뱶 (Promo Codes)
+CREATE TABLE public.promo_codes (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    partner_name VARCHAR(100) NOT NULL,   -- ?? '?꾧퀬??, '?명뀛?ㅻ떣而?, '?대）'
+    promo_code VARCHAR(100) NOT NULL,     -- ?? 'AGODA8', 'HOTELS5'
+    discount_rate VARCHAR(100) NOT NULL,  -- ?? '8% ?좎씤', '5% 異붽? ?좎씤'
+    target_url TEXT NOT NULL,             -- ?대┃ ???곌껐???쒗쑕 ?댄븘由ъ뿉?댄듃 URL
+    description TEXT,                     -- ?곸슜 議곌굔 (?? '10留뚯썝 ?댁긽 寃곗젣 ??, '?꾩꽭怨??명뀛 ???)
+    image_url TEXT,                       -- ?몃꽕???대?吏 URL (?ㅼ씠踰?SEO 由ъ튂 ?ㅻ땲??諛?UI ?몄텧??
+    is_active BOOLEAN DEFAULT TRUE,       -- ?몄텧 ?쒖꽦???щ?
+    click_count INTEGER DEFAULT 0,        -- ?좎씤肄붾뱶 ?대┃??    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- RLS ?ㅼ젙
+ALTER TABLE public.promo_codes ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public read to promo_codes" 
+ON public.promo_codes FOR SELECT 
+USING (true);
+
+CREATE POLICY "Allow admin all access to promo_codes" 
+ON public.promo_codes FOR ALL 
+TO authenticated 
+USING (true) 
+WITH CHECK (true);
+
+-- 8. ?ъ씠???ㅼ젙 (Site Settings)
+CREATE TABLE IF NOT EXISTS public.site_settings (
+    key VARCHAR(100) PRIMARY KEY,
+    value TEXT NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 珥덇린 ?꾨줈紐⑥뀡 ???ㅼ젙 ?쎌엯 (湲곕낯媛? '5??)
+INSERT INTO public.site_settings (key, value) 
+VALUES ('active_promo_month', '5??)
+ON CONFLICT (key) DO NOTHING;
+
+-- RLS ?뺤콉 ?ㅼ젙 (?꾧뎄??議고쉶 媛?? ?몄쬆??愿由ъ옄留??몄쭛 媛??
+ALTER TABLE public.site_settings ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public read to site_settings" 
+ON public.site_settings FOR SELECT 
+USING (true);
+
+CREATE POLICY "Allow admin all access to site_settings" 
+ON public.site_settings FOR ALL 
+TO authenticated 
+USING (true) 
+WITH CHECK (true);
+
+
+-- schema_comments.sql
+
+-- 1. comments ?뚯씠釉??앹꽦
+CREATE TABLE comments (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  post_type VARCHAR(50) NOT NULL, -- 'HOTEL' ?먮뒗 'PASS'
+  post_slug VARCHAR(255) NOT NULL, -- ?대떦 ?ъ뒪?낆쓽 slug (怨좎쑀 二쇱냼)
+  author_name VARCHAR(100) NOT NULL, -- ?묒꽦???됰꽕??  content TEXT NOT NULL, -- ?볤? ?댁슜
+  is_approved BOOLEAN DEFAULT false, -- ?몄텧 ?뱀씤 ?щ? (?쇰컲 ?좎???湲곕낯 false, 愿由ъ옄??true)
+  is_admin BOOLEAN DEFAULT false, -- 愿由ъ옄媛 ?묒꽦???볤??몄? ?뺤씤
+  published_at TIMESTAMPTZ DEFAULT now(), -- 諛쒗뻾 ?쒓컖 (?덉빟 諛쒗뻾???꾪빐 ?ъ슜)
+  created_at TIMESTAMPTZ DEFAULT now() -- ?ㅼ젣 ?곗씠?곕쿋?댁뒪???묒꽦???쒓컖
+);
+
+-- ?몃뜳???앹꽦 (議고쉶 ?띾룄 ?μ긽)
+CREATE INDEX idx_comments_post ON comments(post_type, post_slug);
+CREATE INDEX idx_comments_published_at ON comments(published_at);
+-- passes ?뚯씠釉붿뿉 ?ㅼ쨷 ?쒗쑕 留곹겕瑜??댁쓣 JSONB 而щ읆 異붽?
+ALTER TABLE passes ADD COLUMN IF NOT EXISTS affiliate_links JSONB DEFAULT '[]'::jsonb;
+
+-- 湲곗〈 affiliate_url ?곗씠?곕? affiliate_links JSON 諛곗뿴濡?留덉씠洹몃젅?댁뀡 (?좏깮 ?ы빆)
+-- ??荑쇰━瑜??ㅽ뻾?섎㈃ 湲곗〈???낅젰???⑥씪 留곹겕媛 ?먮룞?쇰줈 ???쒖뒪?쒖뿉 留욊쾶 蹂?섎맗?덈떎.
+UPDATE passes
+SET affiliate_links = jsonb_build_array(
+  jsonb_build_object(
+    'platform', '湲곕낯留곹겕', 
+    'url', affiliate_url
+  )
+)
+WHERE affiliate_url IS NOT NULL AND affiliate_url != '';
+-- ==========================================
+-- 援먰넻 ?⑥뒪 ?듯빀 愿由?諛??몄텧 ?寃잜똿 ?ㅽ궎留??낅뜲?댄듃
+-- ==========================================
+
+-- 1. ?⑥뒪 湲곕낯 ?뺣낫 ?뚯씠釉?CREATE TABLE IF NOT EXISTS public.passes (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    slug VARCHAR(100) NOT NULL UNIQUE,       -- ?? 'skyliner'
+    name_ko VARCHAR(255) NOT NULL,           -- ?? '?ㅼ뭅?대씪?대꼫 ?밴툒 ?댁감'
+    thumbnail_url TEXT,                      -- 紐⑸줉 諛??몃꽕?쇱뿉 ?몄텧???대?吏 URL
+    description TEXT,                        -- 1以??붿빟 (由ъ뒪?몄뿉??蹂댁씪 ?ㅻ챸)
+    content TEXT,                            -- ?곸꽭 ?ㅻ챸 (釉붾줈洹명삎 蹂몃Ц ?댁슜, 留덊겕?ㅼ슫/HTML)
+    affiliate_url TEXT NOT NULL,             -- ?ㅼ젣 援щℓ濡??대룞???쒗쑕 留곹겕
+    meta_title VARCHAR(255),                 -- SEO ??댄?
+    meta_description VARCHAR(500),           -- SEO 硫뷀? ?ㅻ챸
+    view_count INTEGER DEFAULT 0,            -- ?곸꽭?섏씠吏 議고쉶??    click_count INTEGER DEFAULT 0,           -- ?쒗쑕留곹겕 ?대┃??    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 2. ?⑥뒪 ?곸슜 ????寃잜똿) ?뚯씠釉?-- target_type: 'ALL'(?꾩껜 ??, 'LINE'(?뱀젙 ?몄꽑 ?꾩껜), 'STATION'(?뱀젙 ??
+CREATE TABLE IF NOT EXISTS public.pass_targets (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    pass_id UUID REFERENCES public.passes(id) ON DELETE CASCADE,
+    target_type VARCHAR(20) NOT NULL CHECK (target_type IN ('ALL', 'LINE', 'STATION')),
+    target_id UUID,                          -- 'ALL'??寃쎌슦 NULL, 'LINE'?대㈃ line_id, 'STATION'?대㈃ station_id
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- ?몃뜳???앹꽦
+CREATE INDEX IF NOT EXISTS idx_passes_slug ON public.passes(slug);
+CREATE INDEX IF NOT EXISTS idx_pass_targets_pass_id ON public.pass_targets(pass_id);
+CREATE INDEX IF NOT EXISTS idx_pass_targets_target_type ON public.pass_targets(target_type, target_id);
+
+-- RLS(Row Level Security) ?ㅼ젙
+ALTER TABLE public.passes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.pass_targets ENABLE ROW LEVEL SECURITY;
+
+-- passes 沅뚰븳
+CREATE POLICY "Allow public read to passes" 
+ON public.passes FOR SELECT USING (true);
+
+CREATE POLICY "Allow admin all access to passes" 
+ON public.passes FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- pass_targets 沅뚰븳
+CREATE POLICY "Allow public read to pass_targets" 
+ON public.pass_targets FOR SELECT USING (true);
+
+CREATE POLICY "Allow admin all access to pass_targets" 
+ON public.pass_targets FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- (?좏깮) 湲곗〈 ??퀎 ?섎뱶肄붾뵫???⑥뒪 而щ읆 ??젣 ?먮뒗 臾댁떆
+-- ?덉쟾???꾪빐 ??젣?섏????딄퀬 ?붾몼?덈떎. UI?먯꽌留??쒖쇅.
+-- ==========================================
+-- ?ъ뒪???댄븘由ъ뿉?댄듃(援먰넻?⑥뒪 ?곕룞) 湲곕뒫 異붽?
+-- Supabase SQL Editor ?먯꽌 ?꾨옒 荑쇰━瑜??ㅽ뻾?댁＜?몄슂.
+-- ==========================================
+
+ALTER TABLE public.posts ADD COLUMN IF NOT EXISTS linked_pass_ids UUID[] DEFAULT '{}';
+-- ==========================================
+-- 1. station_attractions.station_id瑜?optional濡?蹂寃?-- 2. posts??linked_attraction_ids 而щ읆 異붽?
+-- Supabase SQL Editor ?먯꽌 ?꾨옒 荑쇰━瑜??ㅽ뻾?댁＜?몄슂.
+-- ==========================================
+
+-- 1. 紐낆냼/?≫떚鍮꾪떚媛 ?뱀젙 ??뿉 醫낆냽?섏? ?딆븘???깅줉 媛?ν븯?꾨줉 蹂寃?ALTER TABLE public.station_attractions ALTER COLUMN station_id DROP NOT NULL;
+
+-- 2. ?ъ뒪?낆뿉 ?곌? 紐낆냼/?≫떚鍮꾪떚 ?곕룞??而щ읆 異붽?
+ALTER TABLE public.posts ADD COLUMN IF NOT EXISTS linked_attraction_ids UUID[] DEFAULT '{}';
+-- ==========================================
+-- ??퀎 ?쒗쑕 ?⑥뒪 諛?紐낆냼 愿由?湲곕뒫 異붽? ?낅뜲?댄듃
+-- ==========================================
+
+-- 1. stations ?뚯씠釉붿뿉 ?쒗쑕 ?⑥뒪 留곹겕 而щ읆 異붽?
+ALTER TABLE public.stations ADD COLUMN IF NOT EXISTS subway_pass_link TEXT;
+ALTER TABLE public.stations ADD COLUMN IF NOT EXISTS express_pass_link TEXT;
+
+-- 2. ??二쇰? 紐낆냼 (Station Attractions) ?뚯씠釉??앹꽦
+CREATE TABLE IF NOT EXISTS public.station_attractions (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    station_id UUID REFERENCES public.stations(id) ON DELETE CASCADE,
+    name VARCHAR(255) NOT NULL,            -- ?? '?쒕????ㅽ겕?⑤툝 援먯감濡?, '?붿쫰?덈옖???ㅽ뒠?붿삤 ?ы뙩'
+    category VARCHAR(100),                 -- ?? '愿愿묒?', '?쇳븨', '留쏆쭛'
+    icon VARCHAR(100),                     -- lucide-react ?꾩씠肄??대쫫 ?? 'Camera', 'ShoppingBag'
+    description TEXT,                      -- 1以??붿빟 ?ㅻ챸
+    detail_content TEXT,                   -- ?곸꽭 ?ㅻ챸 (?댄븘由ъ뿉?댄듃 留곹겕媛 ?놁쓣 ??紐⑤떖???쒖떆???댁슜)
+    image_url TEXT,                        -- 紐낆냼 ?대?吏 URL (CDN ?먮뒗 ?몃? 留곹겕)
+    affiliate_url TEXT,                    -- ?대） ???댄븘由ъ뿉?댄듃 ?쒗쑕 留곹겕 (?덉쓣 寃쎌슦 ?몃? 留곹겕濡??대룞)
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- ?몃뜳???앹꽦
+CREATE INDEX IF NOT EXISTS idx_station_attractions_station_id ON public.station_attractions(station_id);
+
+-- RLS (Row Level Security) ?ㅼ젙
+ALTER TABLE public.station_attractions ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public read to station_attractions" 
+ON public.station_attractions FOR SELECT 
+USING (true);
+
+CREATE POLICY "Allow admin all access to station_attractions" 
+ON public.station_attractions FOR ALL 
+TO authenticated 
+USING (true) 
+WITH CHECK (true);
+
+-- ==========================================
+-- ?좎씤肄붾뱶 愿由??낅뜲?댄듃
+-- ==========================================
+ALTER TABLE public.promo_codes ADD COLUMN IF NOT EXISTS click_count INTEGER DEFAULT 0;
+-- =============================================
+-- ?꾩퓙 硫뷀듃濡?媛?대뱶: 硫붾돱 諛??ы뻾 ???ъ뒪???뚯씠釉??앹꽦
+-- Supabase SQL Editor?먯꽌 ?ㅽ뻾??二쇱꽭??
+-- =============================================
+
+-- 1. menus ?뚯씠釉? 理쒖긽???ㅻ퉬寃뚯씠??硫붾돱 愿由?CREATE TABLE IF NOT EXISTS public.menus (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  title TEXT NOT NULL,
+  url TEXT NOT NULL,
+  sort_order INTEGER DEFAULT 0,
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- RLS ?뺤콉 ?ㅼ젙
+ALTER TABLE public.menus ENABLE ROW LEVEL SECURITY;
+
+-- ?꾧뎄???쎄린 媛??CREATE POLICY "menus_select_all" ON public.menus
+  FOR SELECT USING (true);
+
+-- ?몄쬆???ъ슜?먮쭔 ?곌린
+CREATE POLICY "menus_insert_auth" ON public.menus
+  FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "menus_update_auth" ON public.menus
+  FOR UPDATE USING (auth.role() = 'authenticated');
+
+CREATE POLICY "menus_delete_auth" ON public.menus
+  FOR DELETE USING (auth.role() = 'authenticated');
+
+-- 2. posts ?뚯씠釉? ?ы뻾 ??釉붾줈洹??ъ뒪??CREATE TABLE IF NOT EXISTS public.posts (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  title TEXT NOT NULL,
+  slug TEXT UNIQUE NOT NULL,
+  description TEXT,
+  content TEXT,
+  thumbnail_url TEXT,
+  category TEXT DEFAULT '?ы뻾??,
+  view_count INTEGER DEFAULT 0,
+  is_published BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- RLS ?뺤콉 ?ㅼ젙
+ALTER TABLE public.posts ENABLE ROW LEVEL SECURITY;
+
+-- ?꾧뎄???쎄린 媛??CREATE POLICY "posts_select_all" ON public.posts
+  FOR SELECT USING (true);
+
+-- ?몄쬆???ъ슜?먮쭔 ?곌린
+CREATE POLICY "posts_insert_auth" ON public.posts
+  FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "posts_update_auth" ON public.posts
+  FOR UPDATE USING (auth.role() = 'authenticated');
+
+CREATE POLICY "posts_delete_auth" ON public.posts
+  FOR DELETE USING (auth.role() = 'authenticated');
+
+-- ?몃뜳???앹꽦
+CREATE INDEX IF NOT EXISTS idx_posts_slug ON public.posts(slug);
+CREATE INDEX IF NOT EXISTS idx_posts_created_at ON public.posts(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_menus_sort_order ON public.menus(sort_order);
+-- ==========================================
+-- Supabase Row-Level Security (RLS) ?듯빀 ?곸슜 ?ㅽ겕由쏀듃
+-- 紐⑤뱺 ?뚯씠釉붿뿉 ???RLS瑜??쒖꽦?뷀븯怨??덉쟾???뺤콉???ㅼ젙?⑸땲??
+-- ==========================================
+
+-- 1. 紐⑤뱺 二쇱슂 ?뚯씠釉붿뿉 RLS ?쒖꽦??ALTER TABLE public.countries ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.cities ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.lines ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.stations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.station_lines ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.hotels ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.passes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.pass_targets ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.station_attractions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.posts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.menus ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.comments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_activities ENABLE ROW LEVEL SECURITY;
+
+-- (湲곗〈???ㅼ젙???뚯씠釉붾뱾??紐낆떆?곸쑝濡??쒖꽦??
+ALTER TABLE public.promo_codes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.site_settings ENABLE ROW LEVEL SECURITY;
+
+-- 2. "?쎄린 ?꾩슜" ?깃꺽???뚯씠釉붾뱾 ?뺤콉
+-- (?쇰컲 ?좎???議고쉶(SELECT)留?媛?? ?곗씠??異붽?/?섏젙/??젣???몄쬆??愿由ъ옄留?媛??
+
+-- countries
+DROP POLICY IF EXISTS "Allow public read countries" ON public.countries;
+DROP POLICY IF EXISTS "Allow admin all countries" ON public.countries;
+CREATE POLICY "Allow public read countries" ON public.countries FOR SELECT USING (true);
+CREATE POLICY "Allow admin all countries" ON public.countries FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- cities
+DROP POLICY IF EXISTS "Allow public read cities" ON public.cities;
+DROP POLICY IF EXISTS "Allow admin all cities" ON public.cities;
+CREATE POLICY "Allow public read cities" ON public.cities FOR SELECT USING (true);
+CREATE POLICY "Allow admin all cities" ON public.cities FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- lines
+DROP POLICY IF EXISTS "Allow public read lines" ON public.lines;
+DROP POLICY IF EXISTS "Allow admin all lines" ON public.lines;
+CREATE POLICY "Allow public read lines" ON public.lines FOR SELECT USING (true);
+CREATE POLICY "Allow admin all lines" ON public.lines FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- stations
+DROP POLICY IF EXISTS "Allow public read stations" ON public.stations;
+DROP POLICY IF EXISTS "Allow admin all stations" ON public.stations;
+CREATE POLICY "Allow public read stations" ON public.stations FOR SELECT USING (true);
+CREATE POLICY "Allow admin all stations" ON public.stations FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- station_lines
+DROP POLICY IF EXISTS "Allow public read station_lines" ON public.station_lines;
+DROP POLICY IF EXISTS "Allow admin all station_lines" ON public.station_lines;
+CREATE POLICY "Allow public read station_lines" ON public.station_lines FOR SELECT USING (true);
+CREATE POLICY "Allow admin all station_lines" ON public.station_lines FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- hotels
+DROP POLICY IF EXISTS "Allow public read hotels" ON public.hotels;
+DROP POLICY IF EXISTS "Allow admin all hotels" ON public.hotels;
+CREATE POLICY "Allow public read hotels" ON public.hotels FOR SELECT USING (true);
+CREATE POLICY "Allow admin all hotels" ON public.hotels FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- passes
+DROP POLICY IF EXISTS "Allow public read passes" ON public.passes;
+DROP POLICY IF EXISTS "Allow admin all passes" ON public.passes;
+CREATE POLICY "Allow public read passes" ON public.passes FOR SELECT USING (true);
+CREATE POLICY "Allow admin all passes" ON public.passes FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- pass_targets
+DROP POLICY IF EXISTS "Allow public read pass_targets" ON public.pass_targets;
+DROP POLICY IF EXISTS "Allow admin all pass_targets" ON public.pass_targets;
+CREATE POLICY "Allow public read pass_targets" ON public.pass_targets FOR SELECT USING (true);
+CREATE POLICY "Allow admin all pass_targets" ON public.pass_targets FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- station_attractions
+DROP POLICY IF EXISTS "Allow public read station_attractions" ON public.station_attractions;
+DROP POLICY IF EXISTS "Allow admin all station_attractions" ON public.station_attractions;
+CREATE POLICY "Allow public read station_attractions" ON public.station_attractions FOR SELECT USING (true);
+CREATE POLICY "Allow admin all station_attractions" ON public.station_attractions FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- posts
+DROP POLICY IF EXISTS "Allow public read posts" ON public.posts;
+DROP POLICY IF EXISTS "Allow admin all posts" ON public.posts;
+CREATE POLICY "Allow public read posts" ON public.posts FOR SELECT USING (true);
+CREATE POLICY "Allow admin all posts" ON public.posts FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- menus
+DROP POLICY IF EXISTS "Allow public read menus" ON public.menus;
+DROP POLICY IF EXISTS "Allow admin all menus" ON public.menus;
+CREATE POLICY "Allow public read menus" ON public.menus FOR SELECT USING (true);
+CREATE POLICY "Allow admin all menus" ON public.menus FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+
+-- 3. ?좎?媛 ?곗씠?곕? ?앹꽦(異붽?)?????덈뒗 ?뚯씠釉??뺤콉
+
+-- comments: ?꾧뎄??議고쉶 諛??묒꽦(INSERT) 媛?? ?섏젙/??젣???몄쬆??愿由ъ옄留?媛??DROP POLICY IF EXISTS "Allow public read comments" ON public.comments;
+DROP POLICY IF EXISTS "Allow public insert comments" ON public.comments;
+DROP POLICY IF EXISTS "Allow admin all comments" ON public.comments;
+CREATE POLICY "Allow public read comments" ON public.comments FOR SELECT USING (true);
+CREATE POLICY "Allow public insert comments" ON public.comments FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow admin all comments" ON public.comments FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- user_activities: ?쒕룞 濡쒓렇?? ?꾧뎄??議고쉶 諛??묒꽦 媛??DROP POLICY IF EXISTS "Allow public read user_activities" ON public.user_activities;
+DROP POLICY IF EXISTS "Allow public insert user_activities" ON public.user_activities;
+DROP POLICY IF EXISTS "Allow admin all user_activities" ON public.user_activities;
+CREATE POLICY "Allow public read user_activities" ON public.user_activities FOR SELECT USING (true);
+CREATE POLICY "Allow public insert user_activities" ON public.user_activities FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow admin all user_activities" ON public.user_activities FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- ??
+-- 0. Schema Updates (in case schema.sql was already executed before tags column was added)
+ALTER TABLE public.hotels ADD COLUMN IF NOT EXISTS tags TEXT[];
+ALTER TABLE public.hotels ADD COLUMN IF NOT EXISTS distance_meters INTEGER;
+ALTER TABLE public.hotels ADD COLUMN IF NOT EXISTS discount_rate INTEGER;
+
+-- 1. Country & City
+INSERT INTO public.countries (id, code, name_ko, name_en) 
+VALUES ('c0000000-0000-0000-0000-000000000001', 'JP', '?쇰낯', 'Japan')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO public.cities (id, country_id, slug, name_ko, name_en)
+VALUES ('c1000000-0000-0000-0000-000000000002', 'c0000000-0000-0000-0000-000000000001', 'tokyo', '?꾩퓙', 'Tokyo')
+ON CONFLICT (slug) DO NOTHING;
+
+-- 2. Lines
+INSERT INTO public.lines (id, city_id, slug, name_ko, color_hex) VALUES
+('b0000000-0000-0000-0000-000000000010', 'c1000000-0000-0000-0000-000000000002', 'ginza', '湲댁옄??, '#FF9500'),
+('b0000000-0000-0000-0000-000000000011', 'c1000000-0000-0000-0000-000000000002', 'marunouchi', '留덈（?몄슦移섏꽑', '#F62E36'),
+('b0000000-0000-0000-0000-000000000012', 'c1000000-0000-0000-0000-000000000002', 'jr_yamanote', 'JR ?쇰쭏?명뀒??, '#80C241')
+ON CONFLICT (slug) DO NOTHING;
+
+-- 3. Stations
+INSERT INTO public.stations (id, city_id, slug, name_ko, name_en, name_jp, description) VALUES
+('a0000000-0000-0000-0000-000000000010', 'c1000000-0000-0000-0000-000000000002', 'shinjuku', '?좎＜荑좎뿭', 'Shinjuku', '?겼?', '?멸퀎 1???댁슜媛앹쓣 ?먮옉?섎뒗 ?꾩퓙 理쒕???援먰넻 ?덈툕. 媛遺?ㅼ큹, 諛깊솕?? ?꾩퓙?꾩껌 ??愿愿??명봽?쇨? 諛吏묓빐 ?덉뒿?덈떎.'),
+('a0000000-0000-0000-0000-000000000011', 'c1000000-0000-0000-0000-000000000002', 'shibuya', '?쒕??쇱뿭', 'Shibuya', '歷뗨갬', '?딆쓬怨??좏뻾??嫄곕━. ?쒕????ㅽ겕?⑤툝 援먯감濡쒖? 異⑷껄 ?섏튂肄??숈긽???좊챸?섎ŉ ?섎━? ?듭뒪?꾨젅?ㅺ? ?뺤감?⑸땲??'),
+('a0000000-0000-0000-0000-000000000012', 'c1000000-0000-0000-0000-000000000002', 'ginza', '湲댁옄??, 'Ginza', '?佯?, '?쇰낯 理쒓퀬湲?紐낇뭹 嫄곕━?댁옄 ?쇳븨???깆?. 二쇰쭚?먮뒗 蹂댄뻾??泥쒓뎅?쇰줈 蹂?좏빀?덈떎.')
+ON CONFLICT (slug) DO NOTHING;
+
+-- Station Lines Mapping
+INSERT INTO public.station_lines (station_id, line_id, station_order) VALUES
+('a0000000-0000-0000-0000-000000000010', 'b0000000-0000-0000-0000-000000000011', 10), -- Shinjuku Marunouchi
+('a0000000-0000-0000-0000-000000000010', 'b0000000-0000-0000-0000-000000000012', 10), -- Shinjuku Yamanote
+('a0000000-0000-0000-0000-000000000011', 'b0000000-0000-0000-0000-000000000010', 1),  -- Shibuya Ginza
+('a0000000-0000-0000-0000-000000000011', 'b0000000-0000-0000-0000-000000000012', 15), -- Shibuya Yamanote
+('a0000000-0000-0000-0000-000000000012', 'b0000000-0000-0000-0000-000000000010', 10), -- Ginza Ginza
+('a0000000-0000-0000-0000-000000000012', 'b0000000-0000-0000-0000-000000000011', 8)   -- Ginza Marunouchi
+ON CONFLICT (station_id, line_id) DO NOTHING;
+
+-- 4. Hotels
+INSERT INTO public.hotels (id, station_id, slug, name_ko, name_en, star_rating, review_score, review_count, lowest_price, thumbnail_url, tags, view_count, distance_meters, discount_rate) VALUES
+('f0000000-0000-0000-0000-000000000010', 'a0000000-0000-0000-0000-000000000010', 'shinjuku-washington-hotel', '?좎＜荑??뚯떛???명뀛', 'Shinjuku Washington Hotel', 3.5, 8.2, 8540, 125000, 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80', ARRAY['怨듯빆踰꾩뒪', '媛?깅퉬', '鍮꾩쫰?덉뒪'], 412, 500, 25),
+('f0000000-0000-0000-0000-000000000011', 'a0000000-0000-0000-0000-000000000011', 'shibuya-excel-hotel-tokyu', '?쒕????묒? ?명뀛 ?꾪걧', 'Shibuya Excel Hotel Tokyu', 4.0, 8.8, 4215, 250000, 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80', ARRAY['??쭅寃?, '?쇳븨?묎렐??, '?ㅽ겕?⑤툝酉?], 512, 10, 42)
+ON CONFLICT (slug) DO UPDATE SET 
+  distance_meters = EXCLUDED.distance_meters,
+  discount_rate = EXCLUDED.discount_rate;
+

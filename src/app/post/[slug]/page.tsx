@@ -186,7 +186,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         <ViewTracker targetId={post.id} actionType="VIEW_POST" />
         
         {/* 메인 본문 영역 */}
-        <div className="flex-1 min-w-0 max-w-3xl">
+        <div className="flex-1 w-full min-w-0 max-w-3xl">
           {/* 카테고리 + 메타 정보 */}
         <div className="flex items-center gap-3 mb-4 flex-wrap">
           <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-md text-xs font-black flex items-center gap-1">
@@ -239,14 +239,14 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               return (
               <div
                 key={`smart-${pass.id}`}
-                className="group flex flex-col sm:flex-row items-center gap-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-4 hover:shadow-md transition-all"
+                className="group flex flex-col w-full sm:flex-row items-center gap-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-4 hover:shadow-md transition-all"
               >
                 {pass.thumbnail_url && (
                   <Link href={`/pass/${pass.slug}`} className="relative w-full sm:w-28 h-28 sm:h-24 rounded-xl overflow-hidden shadow-sm shrink-0 block">
                     <Image src={pass.thumbnail_url} alt={pass.name_ko} fill className="object-contain bg-slate-50 group-hover:scale-110 transition-transform duration-300" sizes="112px" />
                   </Link>
                 )}
-                <div className="flex-1 text-center sm:text-left">
+                <div className="flex-1 w-full text-center sm:text-left">
                   <div className="flex items-center gap-2 justify-center sm:justify-start mb-1">
                     <span className="bg-blue-600 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider">추천 패스</span>
                     <Link href={`/pass/${pass.slug}`}>
@@ -287,14 +287,14 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             {linkedAttractions.map((attr) => (
               <div
                 key={`smart-attr-${attr.id}`}
-                className="group flex flex-col sm:flex-row items-center gap-4 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-4 hover:shadow-md transition-all"
+                className="group flex flex-col w-full sm:flex-row items-center gap-4 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-4 hover:shadow-md transition-all"
               >
                 {attr.image_url && (
                   <div className="relative w-full sm:w-28 h-28 sm:h-24 rounded-xl overflow-hidden shadow-sm shrink-0">
                     <Image src={attr.image_url} alt={attr.name} fill className="object-contain bg-slate-50 group-hover:scale-110 transition-transform duration-300" sizes="112px" />
                   </div>
                 )}
-                <div className="flex-1 text-center sm:text-left">
+                <div className="flex-1 w-full text-center sm:text-left">
                   <div className="flex items-center gap-2 justify-center sm:justify-start mb-1">
                     <span className="bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider">추천 {attr.category || '명소'}</span>
                     <h3 className="text-sm font-extrabold text-white line-clamp-1">{attr.name}</h3>
@@ -321,7 +321,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         )}
 
         {/* 본문 */}
-        <article className="bg-[#1A2235]/40 backdrop-blur-2xl p-6 md:p-8 rounded-[2rem] border border-white/5 shadow-lg leading-relaxed prose prose-invert prose-cyan max-w-none">
+        <article className="w-full bg-[#1A2235]/40 backdrop-blur-2xl p-6 md:p-8 rounded-[2rem] border border-white/5 shadow-lg leading-relaxed prose prose-invert prose-cyan max-w-none">
           {post.content ? (
             <ImageLightbox>
               <div dangerouslySetInnerHTML={{ __html: post.content }} />

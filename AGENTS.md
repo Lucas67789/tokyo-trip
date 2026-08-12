@@ -9,3 +9,6 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - **Deployment**: The developer uses Git-based automatic deployment (e.g., Vercel, Netlify). Do not make assumptions about `localhost:3000` or local dev environments unless asked.
 - **Workflow**: Ensure that the code changes are completely and cleanly written to the files, and then automatically commit and push the changes directly to the remote repository.
 
+
+# ⚡ Planning Mode Bypass
+- **Direct Execution**: Never use Planning Mode (implementation_plan.md). Do not ask for the user's approval or permission before executing code changes or running commands. Just execute the work directly and immediately.

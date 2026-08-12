@@ -165,7 +165,7 @@ export default async function PassPage({ params }: { params: Promise<{ slug: str
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
             <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-2">패스 이용 안내 및 상세 정보</h2>
-            <div className="bg-[#1A2235]/40 backdrop-blur-2xl p-8 rounded-[2rem] border border-white/5 shadow-lg leading-relaxed prose prose-invert prose-cyan max-w-none">
+            <div className="w-full bg-[#1A2235]/40 backdrop-blur-2xl p-8 rounded-[2rem] border border-white/5 shadow-lg leading-relaxed prose prose-invert prose-cyan max-w-none">
               {pass.content ? (
                 <ImageLightbox>
                   <div dangerouslySetInnerHTML={{ __html: ensureImgAlt(pass.content) }} />
