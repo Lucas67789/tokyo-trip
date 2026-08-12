@@ -3,7 +3,7 @@
 import { useState } from "react";
 import StationSearchSelect from "./StationSearchSelect";
 import { updateHotel } from "@/app/actions/hotelActions";
-import BlockEditor from "./BlockEditor";
+import TiptapEditor from "./TiptapEditor";
 import UnsavedChangesWarning from "./UnsavedChangesWarning";
 
 interface Station {
@@ -86,7 +86,7 @@ export default function HotelEditForm({ stations, initialData }: HotelEditFormPr
       </div>
 
       <div className="mt-8">
-        <BlockEditor initialContent={initialData.content} draftKey={`hotel_edit_${initialData.id}`} />
+        <TiptapEditor initialContent={initialData.content} draftKey={`hotel_edit_${initialData.id}`} />
       </div>
 
       <div className="pt-6 border-t border-slate-100 flex gap-4">

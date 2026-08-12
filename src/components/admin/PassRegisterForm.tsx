@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useTransition } from "react";
-import BlockEditor from "./BlockEditor";
+import TiptapEditor from "./TiptapEditor";
 import { addPass } from "@/app/actions/passActions";
 import { romanizeHangul } from "@/utils/slugify";
 import { useRouter } from "next/navigation";
@@ -247,7 +247,7 @@ export default function PassRegisterForm({ stations, lines }: PassRegisterFormPr
 
       <div className="mt-8">
         <label className="block text-sm font-bold text-slate-700 mb-1.5 ml-1">{"상세 설명 (블로그형)"}</label>
-        <BlockEditor draftKey="pass_register" />
+        <TiptapEditor draftKey="pass_register" />
       </div>
 
       <div className="pt-6 border-t border-slate-100">

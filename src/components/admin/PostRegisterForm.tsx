@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useTransition } from "react";
-import BlockEditor from "./BlockEditor";
+import TiptapEditor from "./TiptapEditor";
 import SingleImageUploader from "./SingleImageUploader";
 import { addPost } from "@/app/actions/postActions";
 import { romanizeHangul } from "@/utils/slugify";
@@ -220,7 +220,7 @@ export default function PostRegisterForm({ passes = [], attractions = [] }: Post
 
       <div className="mt-2">
         <label className="block text-sm font-bold text-slate-700 mb-1.5 ml-1">{"본문 작성"}</label>
-        <BlockEditor draftKey="post_register" />
+        <TiptapEditor draftKey="post_register" />
       </div>
 
       <div className="pt-6 border-t border-slate-100">

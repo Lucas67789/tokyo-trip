@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { updatePass } from "@/app/actions/passActions";
-import BlockEditor from "./BlockEditor";
+import TiptapEditor from "./TiptapEditor";
 import UnsavedChangesWarning from "./UnsavedChangesWarning";
 
 interface Station {
@@ -245,7 +245,7 @@ export default function PassEditForm({ stations, lines, initialData }: PassEditF
       </div>
 
       <div className="mt-8">
-        <BlockEditor initialContent={initialData.content} draftKey={`pass_edit_${initialData.id}`} />
+        <TiptapEditor initialContent={initialData.content} draftKey={`pass_edit_${initialData.id}`} />
       </div>
 
       <div className="pt-6 border-t border-slate-100 flex gap-4">

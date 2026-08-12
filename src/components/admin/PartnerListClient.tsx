@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Trash2, Pencil, X, Building2, Palette, Tag, Globe, FileText, Settings2, Image as ImageIcon } from 'lucide-react';
 import { deletePartner, updatePartner } from '@/app/actions/partnerActions';
-import BlockEditor from './BlockEditor';
+import TiptapEditor from './TiptapEditor';
 
 const PRESET_COLORS = [
   { hex: "#2563EB", label: "Blue"   },
@@ -171,7 +171,7 @@ export default function PartnerListClient({ partners }: { partners: any[] }) {
                   <label className="flex items-center gap-1.5 text-sm font-bold text-slate-700 mb-2">
                     <FileText size={13} className="text-slate-400" /> 공통 가이드 (SEO 최적화)
                   </label>
-                  <BlockEditor inputName="common_guide" title="제휴사 공통 가이드 에디터" initialContent={editingPartner.common_guide} draftKey={`partner_edit_${editingPartner.id}`} />
+                  <TiptapEditor inputName="common_guide" title="제휴사 공통 가이드 에디터" initialContent={editingPartner.common_guide} draftKey={`partner_edit_${editingPartner.id}`} />
                 </div>
               </form>
             </div>

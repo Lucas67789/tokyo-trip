@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useTransition } from "react";
 import StationSearchSelect from "./StationSearchSelect";
-import BlockEditor from "./BlockEditor";
+import TiptapEditor from "./TiptapEditor";
 import { addHotel } from "@/app/actions/hotelActions";
 import { useRouter } from "next/navigation";
 import { romanizeHangul } from "@/utils/slugify";
@@ -128,7 +128,7 @@ export default function HotelRegisterForm({ stations }: HotelRegisterFormProps) 
         </div>
       </div>
 
-      <BlockEditor />
+      <TiptapEditor />
 
       <div className="pt-6 border-t border-slate-100">
         <button 

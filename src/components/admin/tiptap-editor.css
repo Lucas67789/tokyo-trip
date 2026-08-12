@@ -1,0 +1,403 @@
+.tiptap-editor-wrapper {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* ── 툴바 ── */
+.tiptap-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.tiptap-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  min-width: 32px;
+  height: 32px;
+}
+
+.tiptap-toolbar button:hover {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+.tiptap-toolbar button.is-active {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.tiptap-toolbar .toolbar-divider {
+  width: 1px;
+  height: 24px;
+  background: #e2e8f0;
+  margin: 4px 4px;
+  align-self: center;
+}
+
+/* ── 드롭다운 메뉴 ── */
+.tiptap-dropdown {
+  position: relative;
+  display: inline-flex;
+}
+
+.tiptap-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  z-index: 50;
+  min-width: 120px;
+}
+
+.tiptap-dropdown-menu button {
+  width: 100%;
+  text-align: left;
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 4px;
+}
+
+.tiptap-dropdown-menu button:hover {
+  background: #f1f5f9;
+}
+
+/* ── 컬러 팔레트 ── */
+.tiptap-color-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  padding: 8px;
+  min-width: 160px;
+}
+
+.tiptap-color-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.tiptap-color-swatch:hover {
+  transform: scale(1.2);
+  border-color: #94a3b8;
+}
+
+/* ── 에디터 캔버스 ── */
+.tiptap-canvas {
+  padding: 24px 28px;
+  min-height: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.tiptap-canvas .tiptap {
+  outline: none;
+  min-height: 460px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #334155;
+}
+
+/* 본문 텍스트 스타일 */
+.tiptap-canvas .tiptap p {
+  margin-bottom: 0.75em;
+}
+
+.tiptap-canvas .tiptap h2 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #0f172a;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.tiptap-canvas .tiptap h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.tiptap-canvas .tiptap h4 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #334155;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 이미지 */
+.tiptap-canvas .tiptap img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 12px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* 링크 */
+.tiptap-canvas .tiptap a {
+  color: #3b82f6;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* 리스트 */
+.tiptap-canvas .tiptap ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+  margin-bottom: 0.75em;
+}
+
+.tiptap-canvas .tiptap ol {
+  list-style-type: decimal;
+  padding-left: 1.5em;
+  margin-bottom: 0.75em;
+}
+
+.tiptap-canvas .tiptap li {
+  margin-bottom: 0.25em;
+}
+
+/* 구분선 */
+.tiptap-canvas .tiptap hr {
+  border: none;
+  border-top: 2px solid #e2e8f0;
+  margin: 1.5rem 0;
+}
+
+/* 하이라이트 */
+.tiptap-canvas .tiptap mark {
+  background-color: #fef08a;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* 플레이스홀더 */
+.tiptap-canvas .tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #94a3b8;
+  pointer-events: none;
+  height: 0;
+  font-weight: 500;
+}
+
+/* iframe (구글맵 등) */
+.tiptap-canvas .tiptap iframe {
+  width: 100%;
+  height: 400px;
+  border: none;
+  border-radius: 12px;
+  margin: 12px 0;
+}
+
+/* 업로드 상태 바 */
+.tiptap-upload-bar {
+  padding: 8px 16px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* 하단 상태바 */
+.tiptap-status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+/* ── 이미지 페어 (ImagePair) ── */
+.image-pair-wrapper {
+  margin: 12px 0;
+}
+
+.image-pair-container {
+  display: flex;
+  gap: 4px;
+  border-radius: 12px;
+  overflow: visible;
+}
+
+.image-pair-slot {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.image-pair-slot.single {
+  flex: 1;
+}
+
+.image-pair-slot.single img {
+  width: 100%;
+  height: auto;
+  max-height: 600px;
+  object-fit: contain;
+  display: block;
+  border-radius: 12px;
+  background: #f8fafc;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.image-pair-slot.paired {
+  flex: 1;
+  max-height: 400px;
+  min-width: 0;
+}
+
+.image-pair-slot.paired img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+/* 삭제 버튼 */
+.image-pair-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 26px;
+  height: 26px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 5;
+}
+
+.image-pair-slot:hover .image-pair-remove {
+  opacity: 1;
+}
+
+.image-pair-remove:hover {
+  background: rgba(239, 68, 68, 0.85);
+}
+
+/* [+] 추가 버튼 (바깥 영역) */
+.image-pair-add-btn {
+  width: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+  border-radius: 12px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  border: 2px dashed transparent;
+}
+
+.image-pair-add-btn:hover,
+.image-pair-add-btn:focus {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.image-pair-add-btn:focus {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+/* 동그라미 버튼 */
+.image-pair-circle-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.image-pair-add-btn:hover .image-pair-circle-btn {
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.image-pair-circle-btn:hover {
+  background: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+}
+
+.image-pair-plus {
+  font-size: 20px;
+  color: #94a3b8;
+  font-weight: 400;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.image-pair-circle-btn:hover .image-pair-plus {
+  color: white;
+}
+
+/* 로딩 스피너 */
+.image-pair-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid #cbd5e1;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: imagePairSpin 0.8s linear infinite;
+}
+
+@keyframes imagePairSpin {
+  to { transform: rotate(360deg); }
+}

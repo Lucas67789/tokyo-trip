@@ -10,7 +10,7 @@ import PartnerListClient from "@/components/admin/PartnerListClient";
 import PromoCodeListClient from "@/components/admin/PromoCodeListClient";
 import MarkdownImageUploader from "@/components/admin/MarkdownImageUploader";
 import SingleImageUploader from "@/components/admin/SingleImageUploader";
-import BlockEditor from "@/components/admin/BlockEditor";
+import TiptapEditor from "@/components/admin/TiptapEditor";
 
 export const revalidate = 0;
 
@@ -255,7 +255,7 @@ export default async function CouponsAdminPage() {
                   제휴사 공통 가이드 (SEO 최적화)
                   <span className="text-slate-400 font-normal">(선택)</span>
                 </label>
-                <BlockEditor inputName="common_guide" title="제휴사 공통 가이드 에디터" />
+                <TiptapEditor inputName="common_guide" title="제휴사 공통 가이드 에디터" />
               </div>
 
               <button type="submit"
