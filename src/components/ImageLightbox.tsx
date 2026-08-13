@@ -66,7 +66,7 @@ export default function ImageLightbox({ children }: ImageLightboxProps) {
 
         // 텍스트 안내문 추가 로직 (그룹당 1개만)
         // 가장 가까운 블록 레벨 부모를 찾아서 그 밑에 1번만 캡션을 삽입합니다.
-        const blockContainer = img.closest('p, div.grid, div.flex, figure') || img.parentElement;
+        const blockContainer = img.closest('div[data-image-pair]') || img.closest('p, div.grid, div.flex, figure') || img.parentElement;
         
         if (blockContainer && !processedContainers.has(blockContainer)) {
           processedContainers.add(blockContainer);
