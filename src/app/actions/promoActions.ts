@@ -11,7 +11,7 @@ export async function addPromoCode(formData: FormData) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Unauthorized: 오직 관리자만 할인코드를 관리할 수 있습니다.')
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) throw new Error('Unauthorized: 오직 관리자만 할인코드를 관리할 수 있습니다.')
 
   const partner_name   = formData.get('partner_name')   as string
   const promo_code     = (formData.get('promo_code') as string || '').toUpperCase().trim()
@@ -101,7 +101,7 @@ export async function deletePromoCode(id: string) {
 
   // 서버 사이드 관리자 권한 확인
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 할인코드를 관리할 수 있습니다.')
   }
 
@@ -124,7 +124,7 @@ export async function updatePromoCode(id: string, formData: FormData) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Unauthorized')
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) throw new Error('Unauthorized')
 
   const partner_name   = formData.get('partner_name')   as string
   const promo_code     = (formData.get('promo_code') as string || '').toUpperCase().trim()
@@ -206,7 +206,7 @@ export async function deletePromoCodes(ids: string[]) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Unauthorized')
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) throw new Error('Unauthorized')
 
   if (!ids || ids.length === 0) return
 

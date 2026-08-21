@@ -9,7 +9,7 @@ export async function updateStationPasses(stationId: string, subwayPassLink: str
     
     // Auth check
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error("Unauthorized");
+    if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) throw new Error("Unauthorized");
 
     const { error } = await supabase
       .from("stations")
@@ -61,7 +61,7 @@ export async function addStationAttraction(data: {
     
     // Auth check
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error("Unauthorized: 로그인 세션이 만료되었거나 관리자 권한이 없습니다.");
+    if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) throw new Error("Unauthorized: 로그인 세션이 만료되었거나 관리자 권한이 없습니다.");
 
     const { error } = await supabase
       .from("station_attractions")
@@ -96,7 +96,7 @@ export async function updateStationAttraction(id: string, data: {
     
     // Auth check
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error("Unauthorized: 로그인 세션이 만료되었거나 관리자 권한이 없습니다.");
+    if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) throw new Error("Unauthorized: 로그인 세션이 만료되었거나 관리자 권한이 없습니다.");
 
     const { error } = await supabase
       .from("station_attractions")
@@ -123,7 +123,7 @@ export async function deleteStationAttraction(id: string) {
     
     // Auth check
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error("Unauthorized");
+    if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) throw new Error("Unauthorized");
 
     const { error } = await supabase
       .from("station_attractions")

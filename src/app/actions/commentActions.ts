@@ -48,7 +48,7 @@ export async function addAdminComment(formData: FormData) {
 
   // 권한 확인
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error("Unauthorized: 관리자만 접근 가능합니다.");
   }
 
@@ -93,7 +93,7 @@ export async function approveComment(id: string, post_type: string, post_slug: s
   const supabase = await createClient();
   
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) throw new Error("Unauthorized");
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) throw new Error("Unauthorized");
 
   const { error } = await supabase.from("comments").update({ is_approved: true }).eq("id", id);
   if (error) throw new Error(error.message);
@@ -107,7 +107,7 @@ export async function deleteComment(id: string, post_type: string, post_slug: st
   const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) throw new Error("Unauthorized");
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) throw new Error("Unauthorized");
 
   const { error } = await supabase.from("comments").delete().eq("id", id);
   if (error) throw new Error(error.message);

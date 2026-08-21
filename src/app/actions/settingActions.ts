@@ -11,7 +11,7 @@ export async function updatePromoMonthSetting(formData: FormData) {
 
   // 서버 사이드 관리자 권한 확인
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 설정을 편집할 수 있습니다.')
   }
 
@@ -49,7 +49,7 @@ export async function updateSidebarPromos(promoIds: string[]) {
 
   // 서버 사이드 관리자 권한 확인
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 설정을 편집할 수 있습니다.')
   }
 
@@ -79,7 +79,7 @@ export async function updateHotelSidebarPromos(hotelId: string, promoIds: string
 
   // 서버 사이드 관리자 권한 확인
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 설정을 편집할 수 있습니다.')
   }
 

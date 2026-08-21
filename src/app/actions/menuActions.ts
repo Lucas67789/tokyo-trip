@@ -7,7 +7,7 @@ export async function addMenu(formData: FormData) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 메뉴를 등록할 수 있습니다.')
   }
 
@@ -37,7 +37,7 @@ export async function updateMenu(id: string, title: string, url: string, sort_or
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 메뉴를 수정할 수 있습니다.')
   }
 
@@ -57,7 +57,7 @@ export async function deleteMenu(id: string) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 메뉴를 삭제할 수 있습니다.')
   }
 
@@ -72,7 +72,7 @@ export async function toggleMenuActive(id: string, is_active: boolean) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized')
   }
 

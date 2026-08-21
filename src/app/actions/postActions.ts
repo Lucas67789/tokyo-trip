@@ -7,7 +7,7 @@ export async function addPost(formData: FormData) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 포스팅을 등록할 수 있습니다.')
   }
 
@@ -78,7 +78,7 @@ export async function updatePost(formData: FormData) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 포스팅을 수정할 수 있습니다.')
   }
 
@@ -159,7 +159,7 @@ export async function deletePost(id: string) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 포스팅을 삭제할 수 있습니다.')
   }
 
@@ -183,7 +183,7 @@ export async function duplicatePost(id: string) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 포스팅을 복사할 수 있습니다.')
   }
 

@@ -10,7 +10,7 @@ export default async function PassEditPage({ params }: { params: Promise<{ id: s
 
   // 인증 확인
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     return (
       <div className="max-w-4xl mx-auto py-20 text-center">
         <h1 className="text-2xl font-bold text-slate-800 mb-4">접근 권한이 없습니다</h1>

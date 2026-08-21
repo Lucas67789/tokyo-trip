@@ -8,7 +8,7 @@ export async function addPass(formData: FormData) {
 
   // 서버 사이드 인증 확인
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 패스를 등록할 수 있습니다.')
   }
 
@@ -114,7 +114,7 @@ export async function deletePass(id: string) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 패스를 삭제할 수 있습니다.')
   }
 
@@ -130,7 +130,7 @@ export async function updatePass(formData: FormData) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 패스를 수정할 수 있습니다.')
   }
 

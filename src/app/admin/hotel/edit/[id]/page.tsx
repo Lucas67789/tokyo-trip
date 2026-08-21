@@ -11,7 +11,7 @@ export default async function AdminHotelEditPage({ params }: { params: Promise<{
 
   // 관리자 권한 확인
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     return (
       <div className="flex justify-center items-center h-screen text-slate-500 font-bold">
         권한이 없습니다. 관리자로 로그인해주세요.

@@ -9,7 +9,7 @@ import { revalidatePath } from 'next/cache'
 export async function addPartner(formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Unauthorized: 관리자만 제휴사를 등록할 수 있습니다.')
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) throw new Error('Unauthorized: 관리자만 제휴사를 등록할 수 있습니다.')
 
   const name      = (formData.get('name')      as string || '').trim()
   const slug      = (formData.get('slug')      as string || '').toLowerCase().trim().replace(/\s+/g, '-')
@@ -43,7 +43,7 @@ export async function addPartner(formData: FormData) {
 export async function deletePartner(id: string) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Unauthorized')
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) throw new Error('Unauthorized')
 
   const { error } = await supabase.from('partners').delete().eq('id', id)
   if (error) throw new Error(error.message)
@@ -57,7 +57,7 @@ export async function deletePartner(id: string) {
 export async function updatePartner(id: string, formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Unauthorized')
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) throw new Error('Unauthorized')
 
   const name      = (formData.get('name')      as string || '').trim()
   const slug      = (formData.get('slug')      as string || '').toLowerCase().trim().replace(/\s+/g, '-')

@@ -9,7 +9,7 @@ export async function addHotel(formData: FormData) {
 
   // 서버 사이드 인증 확인
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 호텔을 등록할 수 있습니다.')
   }
 
@@ -63,7 +63,7 @@ export async function deleteHotel(id: string) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 호텔을 삭제할 수 있습니다.')
   }
 
@@ -78,7 +78,7 @@ export async function updateHotel(formData: FormData) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
+  if (!user || (process.env.ADMIN_EMAIL && user.email !== process.env.ADMIN_EMAIL)) {
     throw new Error('Unauthorized: 오직 관리자만 호텔을 수정할 수 있습니다.')
   }
 
